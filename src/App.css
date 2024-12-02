@@ -1,38 +1,193 @@
-.App {
-  text-align: center;
+/* navbar */
+nav {
+  font-family: Sour Gummy, Arial, Helvetica, sans-serif;
+  margin-bottom: 2rem;
+  position: fixed !important;
+  width: 100%;
+  z-index: 999 !important;
+  box-shadow: 0 0px 10px #cccccc80;
+  opacity: 0.95;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+nav i {
+  font-size: 22px;
+  margin-top: 3px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+
+
+nav .logo {
+  background: linear-gradient(to right, #ffc107, purple, rgb(224, 74, 74), #ff53ae, #fcb, #ffc107);
+  background-size: 500%;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: rainbow 10s infinite linear;
+  background-position: left;
+  font-size: 1.7rem;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+strong {
+  font-weight: bolder;
+}
+
+.search-wraper {
+  position: relative;
+}
+
+.search-wraper i {
+  position: absolute;
+  top: 40%;
+  right: 5px;
+  transform: translate(0, -40%);
+  z-index: 2;
+  color: #000;
+  cursor: default;
+}
+
+.search-wraper input:focus {
+  box-shadow: 0 0 10px red;
+}
+
+.search-wraper input:focus+i {
+  display: none;
+}
+
+
+
+/* cards */
+section {
+  margin-top: 6rem;
+}
+
+.cards {
+  width: 90%;
+  margin: 2rem auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  position: relative;
+  margin-bottom: 7rem;
+}
+
+.cards .card {
+  height: 450px;
+  filter: drop-shadow(0 0 7px #000);
+  border-radius: 20px;
+}
+
+.cards .card img {
+  height: 100%;
+  filter: brightness(0.7);
+  border-radius: 20px;
+}
+
+.cards .card .card-data {
+  width: 100%;
+  height: 55%;
+  text-align: left;
+  position: absolute;
+  bottom: 0;
+  padding: 7px 10px;
+  background: #00000091;
+  color: aliceblue;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 0 5px #ffffff inset;
+  border-radius: 0 0 20px 20px;
+}
+
+.card .phone {
+  text-decoration: none;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+  border-radius: 100%;
+  font-size: 1.5rem;
+  color: green;
+}
+
+.card .phone i {
+  filter: drop-shadow(0 0 5px #000);
+}
+
+.card .phone i:hover {
+  filter: drop-shadow(0 0 5px #ccc);
+}
+
+/* Login */
+.formControl {
+  width: 75%;
+  display: grid;
+  margin: 10px auto;
+  gap: 10px;
+}
+
+.form-row {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  gap: 5px;
+}
+
+.form-row button {
+  width: 50%;
+}
+
+.spinner-border {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+/* register */
+.register-box .formControl {
+  width: 60%;
+}
+
+
+/* footer */
+
+.gap {
+  width: 100%;
+  height: 80px;
+  margin-top: 3rem;
+}
+
+footer {
+  width: 100%;
+  padding: 15px 20px 0px;
+  margin: 0 auto;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 0);
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  box-shadow: 0 0px 10px #cccccc80;
+  opacity: 0.95;
 }
 
-.App-link {
-  color: #61dafb;
+footer ul {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+footer ul li {
+  display: flex;
+  text-align: center;
+  gap: 2px;
+  flex-direction: column;
+}
+
+/* 404 not found */
+#notFound h1 {
+  font-size: 7.5em;
+  margin: 15px 0px;
+  font-weight: bold;
+}
+
+#notFound h2 {
+  font-weight: bold;
 }

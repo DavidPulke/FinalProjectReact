@@ -1,0 +1,63 @@
+@media(min-width: 776px) {
+    .register-box .formWrap {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/* larger phones */
+
+
+@media(max-width: 1000px) {
+
+    /* cards */
+    section .cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media(max-width: 991px) {
+
+    /* navbar */
+    .form-search {
+        position: absolute;
+        left: 50%;
+        top: 10px;
+        transform: translate(-50%, 0);
+    }
+
+    nav .loginNav {
+        transform: translateY(-10px);
+        padding-left: 12px;
+    }
+
+}
+
+@media(max-width: 776px) {
+
+
+    /* cards */
+    section .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/* Phones */
+@media(max-width: 576px) {
+
+    /* navbar */
+    .form-search {
+        width: 70%;
+        right: 10px;
+        top: 87%;
+        z-index: 2;
+        transform: translate(-30%, -100%);
+    }
+
+    /* cards */
+    section .cards {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
