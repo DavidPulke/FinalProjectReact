@@ -2,6 +2,9 @@ import { FormikValues, useFormik } from "formik";
 import { FunctionComponent } from "react";
 import { Link, NavigateFunction, useNavigate } from "react-router-dom";
 import * as yup from "yup"
+import { login } from "../services/usersService";
+import { errorMsg } from "../services/feedbackService";
+import { jwtDecode } from "jwt-decode";
 
 interface LoginProps {
 
@@ -21,6 +24,11 @@ const Login: FunctionComponent<LoginProps> = () => {
             password: yup.string().required().min(7, "Password required at least seven characters ").max(20, "Password required at most 20 characters").matches(/^(?=.*[A-Z])/, 'Must contain at least one uppercase character'),
         }),
         onSubmit: (values) => {
+            login(values).then((res) => {
+                navigate("/");
+                localStorage.token = res.data
+
+            }).catch((err) => errorMsg(`Error: ${err}`))
             console.log(values);
         }
     })

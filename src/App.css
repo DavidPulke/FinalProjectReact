@@ -114,6 +114,20 @@ section {
   filter: drop-shadow(0 0 5px #ccc);
 }
 
+#searchError {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -40%);
+}
+
+.pagesNav {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
 /* Login */
 .formControl {
   width: 75%;

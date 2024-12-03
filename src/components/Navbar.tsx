@@ -1,16 +1,16 @@
-import { Dispatch, FunctionComponent, useEffect, useRef, useState } from "react";
+import { FunctionComponent } from "react";
 import { NavLink } from "react-router-dom";
-import { getAllCards, searchCards } from "../services/cardsService";
+import { searchCards } from "../services/cardsService";
 import { useDispatch } from "react-redux";
-import Card from "../interfaces/Card";
-import { CardsAction, filterCardsAction } from "../redux/PostsState";
+
+import { filterCardsAction } from "../redux/PostsState";
 
 interface NavbarProps {
     setTheme: (flag: boolean) => void
-    darkMode?: boolean;
+    lightMode?: boolean;
 }
 
-const Navbar: FunctionComponent<NavbarProps> = ({ setTheme, darkMode }) => {
+const Navbar: FunctionComponent<NavbarProps> = ({ setTheme, lightMode }) => {
 
     const dispatch = useDispatch<any>();
 
@@ -55,7 +55,7 @@ const Navbar: FunctionComponent<NavbarProps> = ({ setTheme, darkMode }) => {
 
 
                         <span className="nav-item me-2 text-light mt-2">
-                            {darkMode ? <i className="fa-solid fa-moon" onClick={() => setTheme(true)}></i> : <i className="fa-regular fa-sun" onClick={() => setTheme(false)}></i>}
+                            {lightMode ? <i className="fa-solid fa-moon" onClick={() => setTheme(true)}></i> : <i className="fa-regular fa-sun" onClick={() => setTheme(false)}></i>}
                         </span>
                     </form>
 

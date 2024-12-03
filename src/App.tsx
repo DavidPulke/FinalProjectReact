@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Navbar from './components/Navbar';
@@ -23,40 +23,48 @@ let themes = {
   }
 }
 
+let tools = {
+  themes: themes,
+  user: { loggedIn: localStorage.token !== undefined ? true : false }
+}
 
 
+export const UserTools = createContext(tools)
 
 
 function App() {
-  let [darkMode, setDarkMode] = useState<boolean>(
+  let [lightMode, setlightMode] = useState<boolean>(
     localStorage.getItem('dark') == "true" ? true : false
   );
 
+  let [loggedIn, setLoggedIn] = useState<boolean>(localStorage.token !== null ? true : false)
+
   let handleTheme = (flag: boolean) => {
     if (flag) {
-      setDarkMode(false)
-      localStorage.setItem('dark', "false")
+      setlightMode(false)
+      localStorage.setItem('LightMode', "false")
     } else {
-      setDarkMode(true)
-      localStorage.setItem('dark', "true")
+      setlightMode(true)
+      localStorage.setItem('LightMode', "true")
     }
   }
 
   return (
     <Provider store={store} >
-      <div className="App" style={darkMode ? { color: themes.dark.color, background: themes.dark.background } : { color: themes.light.color, background: themes.light.background }} >
+      <div className="App" style={lightMode ? { color: themes.dark.color, background: themes.dark.background } : { color: themes.light.color, background: themes.light.background }} >
         <ToastContainer />
-        <Router>
-          <Navbar setTheme={handleTheme} darkMode={darkMode} />
-          <Routes>
-            <Route path='/' element={<Cards />}></Route>
-            <Route path='/login' element={<Login />}></Route>
-            <Route path='/register' element={<Register />}></Route>
-
-            <Route path='*' element={<PageNotFound />}></Route>
-          </Routes>
-          <Footer />
-        </Router>
+        <UserTools.Provider value={tools}>
+          <Router>
+            <Navbar setTheme={handleTheme} lightMode={lightMode} />
+            <Routes>
+              <Route path='/' element={<Cards />}></Route>
+              <Route path='/login' element={<Login />}></Route>
+              <Route path='/register' element={<Register />}></Route>
+              <Route path='*' element={<PageNotFound />}></Route>
+            </Routes>
+            <Footer />
+          </Router>
+        </UserTools.Provider>
       </div>
     </Provider>);
 }
