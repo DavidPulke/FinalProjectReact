@@ -8,11 +8,11 @@ import { errorMsg } from "../services/feedbackService";
 import { UserTools } from "../App";
 import CustomPagination from "./tools/CustomPagination";
 
-interface CartsProps {
+interface CardsProps {
 
 }
 
-const Carts: FunctionComponent<CartsProps> = () => {
+const Cards: FunctionComponent<CardsProps> = () => {
     let [isLoading, setIsLoading] = useState<boolean>(true)
     let cards = useSelector((state: any) => state.cardsState.cards);
     const dispatch = useDispatch<Dispatch<CardsAction>>();
@@ -73,4 +73,4 @@ const Carts: FunctionComponent<CartsProps> = () => {
 
 }
 
-export default Carts;
+export default Cards;

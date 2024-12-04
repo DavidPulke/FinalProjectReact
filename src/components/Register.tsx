@@ -1,10 +1,16 @@
-import { FormikValues, useFormik } from "formik";
+
 import { FunctionComponent } from "react";
 import { Link, NavigateFunction, useNavigate } from "react-router-dom";
-import * as yup from "yup"
-import { register } from "../services/usersService";
+import { usePassword } from "../hooks/usePassword";
+import { handlePassword } from "./tools/handlers/handlePassword";
+import { FormikValues, useFormik } from "formik";
 import { User } from "../interfaces/User";
-import { errorMsg, successMsg } from "../services/feedbackService";
+import { successMsg, errorMsg } from "../services/feedbackService";
+import { register } from "../services/usersService";
+import * as yup from "yup"
+import { initialValues } from "./tools/largeObj/registerFormik";
+
+
 
 interface RegisterProps {
 
@@ -12,33 +18,12 @@ interface RegisterProps {
 
 const Register: FunctionComponent<RegisterProps> = () => {
 
+    let { passInput, show, setShow } = usePassword()
     const navigate: NavigateFunction = useNavigate()
 
-    const formik: FormikValues = useFormik<User>({
-        initialValues: {
-            name: {
-                first: "",
-                middle: "",
-                last: "",
-            },
 
-            phone: "",
-            email: "",
-            password: "",
-            image: {
-                url: "",
-                alt: "",
-            },
-            address: {
-                state: "",
-                country: "",
-                city: "",
-                street: "",
-                houseNumber: 0,
-                zip: 0,
-            },
-            isBusiness: false
-        },
+    const formik: FormikValues = useFormik<User>({
+        initialValues: initialValues,
         validationSchema: yup.object({
             name: yup.object({
                 first: yup.string().required("First name is required").min(2, "First name must be at least 2 characters"),
@@ -80,6 +65,7 @@ const Register: FunctionComponent<RegisterProps> = () => {
 
         }
     })
+
 
     return (<section className="register-box">
         <h1 className="text-center">Create Your Own Account</h1>
@@ -195,7 +181,12 @@ const Register: FunctionComponent<RegisterProps> = () => {
                             name="password"
                             onBlur={formik.handleBlur}
                             onChange={formik.handleChange}
+                            ref={passInput}
                         />
+                        <i onClick={() => {
+                            passInput.current.type = handlePassword(passInput.current?.type);
+                            setShow(!show)
+                        }} className={`fa-${show ? "solid" : "regular"} fa-eye`} title="Show Password"></i>
                         <label className={formik.touched.password && formik.errors.password && "text-danger"} htmlFor="floatingPassword">Password *</label>
                         {formik.touched.password && formik.errors.password && <p className="text-danger">
                             {formik.errors.password}

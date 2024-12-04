@@ -128,6 +128,8 @@ section {
   transform: translate(-50%, 0);
 }
 
+
+
 /* Login */
 .formControl {
   width: 75%;
@@ -150,6 +152,19 @@ section {
   top: 50%;
   left: 50%;
 }
+
+#floatingPassword {
+  position: relative;
+}
+
+.fa-eye {
+  position: absolute;
+  right: 10px;
+  color: red;
+  transform: translate(0, -220%);
+}
+
+
 
 /* register */
 .register-box .formControl {

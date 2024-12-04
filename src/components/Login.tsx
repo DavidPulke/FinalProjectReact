@@ -1,10 +1,11 @@
 import { FormikValues, useFormik } from "formik";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useRef, useState } from "react";
 import { Link, NavigateFunction, useNavigate } from "react-router-dom";
 import * as yup from "yup"
 import { login } from "../services/usersService";
 import { errorMsg } from "../services/feedbackService";
-import { jwtDecode } from "jwt-decode";
+import { handlePassword } from "./tools/handlers/handlePassword";
+import { usePassword } from "../hooks/usePassword";
 
 interface LoginProps {
 
@@ -13,6 +14,7 @@ interface LoginProps {
 const Login: FunctionComponent<LoginProps> = () => {
 
     const navigate: NavigateFunction = useNavigate()
+    let { passInput, show, setShow } = usePassword()
 
     const formik: FormikValues = useFormik<any>({
         initialValues: {
@@ -48,17 +50,24 @@ const Login: FunctionComponent<LoginProps> = () => {
                 </p>}
             </div>
 
-            <div className="form-floating w-75 m-auto">
+            <div className="form-floating w-75 m-auto position-relative">
                 <input type="password" className="form-control" id="floatingPassword" placeholder="Password"
                     name="password"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
+                    autoComplete="password"
+                    ref={passInput}
                 />
+                <i onClick={() => {
+                    passInput.current.type = handlePassword(passInput.current?.type);
+                    setShow(!show)
+                }} className={`fa-${show ? "solid" : "regular"} fa-eye`}></i>
                 <label htmlFor="floatingPassword">Password</label>
-                {formik.touched.password && formik.errors.password && <p className="text-danger">
+                {formik.touched.password && formik.errors.password && <p className="text-danger password-error">
                     {formik.errors.password}
                 </p>}
             </div>
+
             <div className="formControl">
                 <div className="form-row">
                     <button type="button" className="btn btn-outline-danger"
