@@ -9,6 +9,7 @@ export interface Name {
 
 
 export interface User {
+    _id?: string,
     name: Name,
     phone: string,
     email: string,

@@ -14,6 +14,20 @@ nav i {
   margin-top: 3px;
 }
 
+.userIcon {
+  width: 43px;
+  height: 43px;
+  margin-right: 2rem;
+  background-color: #fff;
+  border-radius: 100%;
+  padding: 7.2px;
+  box-shadow: 0 0 7px #fcb;
+}
+
+.userIcon img {
+  width: 100%;
+}
+
 
 
 nav .logo {

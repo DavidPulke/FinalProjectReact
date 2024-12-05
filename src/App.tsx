@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Navbar from './components/Navbar';
@@ -11,33 +11,22 @@ import PageNotFound from './components/PageNotFound';
 import { ToastContainer } from 'react-toastify';
 import { Provider } from 'react-redux';
 import store from './redux/store';
-
-let themes = {
-  light: {
-    color: "#fff",
-    background: "#191919"
-  },
-  dark: {
-    color: "#000",
-    background: "#fff"
-  }
-}
-
-let tools = {
-  themes: themes,
-  user: { loggedIn: localStorage.token !== undefined ? true : false }
-}
+import { getUserDetails } from './services/usersService';
+import { tools, themes, UserTools } from './hooks/useUser';
 
 
-export const UserTools = createContext(tools)
+
+
+
+
 
 
 function App() {
   let [lightMode, setlightMode] = useState<boolean>(
-    localStorage.getItem('dark') == "true" ? true : false
+    localStorage.getItem('LightMode') == "true" ? true : false
   );
 
-  let [loggedIn, setLoggedIn] = useState<boolean>(localStorage.token !== null ? true : false)
+  let [flag, setFlag] = useState<boolean>()
 
   let handleTheme = (flag: boolean) => {
     if (flag) {
@@ -49,13 +38,18 @@ function App() {
     }
   }
 
+  useEffect(() => {
+
+  }, [flag])
+
+
   return (
     <Provider store={store} >
       <div className="App" style={lightMode ? { color: themes.dark.color, background: themes.dark.background } : { color: themes.light.color, background: themes.light.background }} >
         <ToastContainer />
         <UserTools.Provider value={tools}>
           <Router>
-            <Navbar setTheme={handleTheme} lightMode={lightMode} />
+            <Navbar setTheme={handleTheme} lightMode={lightMode} setFlag={setFlag} flag={flag} />
             <Routes>
               <Route path='/' element={<Cards />}></Route>
               <Route path='/login' element={<Login />}></Route>

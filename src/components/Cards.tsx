@@ -5,18 +5,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import { CardsAction, setAllCardsAction } from "../redux/PostsState";
 import { errorMsg } from "../services/feedbackService";
-import { UserTools } from "../App";
 import CustomPagination from "./tools/CustomPagination";
+import { getUserDetails } from "../services/usersService";
+import { UserTools } from "../hooks/useUser";
 
 interface CardsProps {
 
 }
 
 const Cards: FunctionComponent<CardsProps> = () => {
-    let [isLoading, setIsLoading] = useState<boolean>(true)
+    let [isLoading, setIsLoading] = useState<boolean>(true);
     let cards = useSelector((state: any) => state.cardsState.cards);
     const dispatch = useDispatch<Dispatch<CardsAction>>();
-    let userTools = useContext(UserTools)
+    let userTools = useContext(UserTools);
 
     // Pagenation
     const [currentPage, setCurrentPage] = useState<number>(1);
@@ -31,7 +32,8 @@ const Cards: FunctionComponent<CardsProps> = () => {
             userTools.user.loggedIn = true
             setIsLoading(false)
         }).catch((err) => errorMsg(`Error: ${err}`)
-        )
+        );
+
     }, [])
     return (<section className="text-center">
         <h1>Cards Page</h1>

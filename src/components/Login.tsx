@@ -3,7 +3,7 @@ import { FunctionComponent, useRef, useState } from "react";
 import { Link, NavigateFunction, useNavigate } from "react-router-dom";
 import * as yup from "yup"
 import { login } from "../services/usersService";
-import { errorMsg } from "../services/feedbackService";
+import { errorMsg, successMsg } from "../services/feedbackService";
 import { handlePassword } from "./tools/handlers/handlePassword";
 import { usePassword } from "../hooks/usePassword";
 
@@ -27,10 +27,12 @@ const Login: FunctionComponent<LoginProps> = () => {
         }),
         onSubmit: (values) => {
             login(values).then((res) => {
+                localStorage.token = res.data;
+                successMsg("Login successfuly!")
                 navigate("/");
-                localStorage.token = res.data
+                window.history.go(0)
 
-            }).catch((err) => errorMsg(`Error: ${err}`))
+            }).catch(() => errorMsg(`Error: user not found`))
             console.log(values);
         }
     })
@@ -55,7 +57,7 @@ const Login: FunctionComponent<LoginProps> = () => {
                     name="password"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
-                    autoComplete="password"
+                    autoComplete="on"
                     ref={passInput}
                 />
                 <i onClick={() => {
