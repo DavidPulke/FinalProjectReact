@@ -6,18 +6,22 @@ import { Dispatch } from "redux";
 import { CardsAction, setAllCardsAction } from "../redux/PostsState";
 import { errorMsg } from "../services/feedbackService";
 import CustomPagination from "./tools/CustomPagination";
-import { getUserDetails } from "../services/usersService";
-import { UserTools } from "../hooks/useUser";
+import { UserTools, useUser } from "../hooks/useUser";
+import { useCards } from "../hooks/useCards";
 
 interface CardsProps {
-
+    searchInput: string;
 }
 
-const Cards: FunctionComponent<CardsProps> = () => {
-    let [isLoading, setIsLoading] = useState<boolean>(true);
-    let cards = useSelector((state: any) => state.cardsState.cards);
-    const dispatch = useDispatch<Dispatch<CardsAction>>();
+const Cards: FunctionComponent<CardsProps> = ({ searchInput }) => {
+    let { cards, isLoading } = useCards()
     let userTools = useContext(UserTools);
+    let { user } = useUser()
+    let [show, setShow] = useState<boolean>(false)
+
+    let handleLike = () => {
+        setShow(!show)
+    }
 
     // Pagenation
     const [currentPage, setCurrentPage] = useState<number>(1);
@@ -26,24 +30,27 @@ const Cards: FunctionComponent<CardsProps> = () => {
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentCards = cards.slice(indexOfFirstItem, indexOfLastItem);
 
-    useEffect(() => {
-        getAllCards().then((res) => {
-            dispatch(setAllCardsAction(res.data))
-            userTools.user.loggedIn = true
-            setIsLoading(false)
-        }).catch((err) => errorMsg(`Error: ${err}`)
-        );
 
-    }, [])
+
+
+
+
+
+
+
     return (<section className="text-center">
         <h1>Cards Page</h1>
         <div className="cards">
             {isLoading && <div className="spinner-border" role="status">
                 <span className="sr-only">Loading...</span>
             </div>}
-            {currentCards.length > 0 ? currentCards.map((card: Card) => {
+
+            {searchInput == "" && currentCards.length > 0 && currentCards.map((card: Card) => {
                 return <div className="card" key={card._id}>
-                    <a className="phone" href={`tel:${card.phone}`}><i className="fa-solid fa-phone"></i></a>
+                    <div className="cardTools">
+                        <a className="phone" href={`tel:${card.phone}`}><i className="fa-solid fa-phone"></i></a>
+                        {userTools.user.loggedIn && <i onClick={() => handleLike()} className={`fa-${show ? "solid" : "regular"} fa-heart`}></i>}
+                    </div>
 
                     <img
                         src={card.image.url}
@@ -62,14 +69,43 @@ const Cards: FunctionComponent<CardsProps> = () => {
                         <p><strong>Card Number: </strong>{card.bizNumber}</p>
                     </div>
                 </div>
-            }) : <div id="searchError"><h1 className="text-warning">No Result</h1></div>}
+            })}
+            {searchInput !== "" && cards.length > 0 && cards.map((card: Card) => {
+                return <div className="card" key={card._id}>
+                    <div className="cardTools">
+                        <a className="phone" href={`tel:${card.phone}`}><i className="fa-solid fa-phone"></i></a>
+
+                        {userTools.user.loggedIn && <i onClick={() => handleLike()} className={`fa-${show ? "solid" : "regular"} fa-heart`}></i>}
+                    </div>
+
+                    <img
+                        src={card.image.url}
+                        alt={card.image.alt}
+                        title={card.title}
+                        onError={(e) => {
+                            e.currentTarget.src = "Images/DefaultCardImage.gif";
+                        }}
+                    />
+                    <div className="card-data">
+                        <h3>{card.title}</h3>
+                        <h5>{card.subtitle}</h5>
+                        <hr />
+                        <p><strong>Phone:</strong> {card.phone}</p>
+                        <p><strong>Address:</strong> {card.address.country}, {card.address.city}, {card.address.street}</p>
+                        <p><strong>Card Number: </strong>{card.bizNumber}</p>
+                    </div>
+                </div>
+            })}
+            {!isLoading && cards.length <= 0 && currentCards.length <= 0 && <div id="searchError"><h1 className="text-warning">No results found!</h1></div>}
+
         </div>
-        <CustomPagination
+
+        {searchInput == "" && < CustomPagination
             totalItems={cards.length}
             itemsPerPage={itemsPerPage}
             currentPage={currentPage}
             onPageChange={(page) => setCurrentPage(page)}
-        />
+        />}
     </section>);
 
 

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Navbar from './components/Navbar';
@@ -13,6 +13,7 @@ import { Provider } from 'react-redux';
 import store from './redux/store';
 import { getUserDetails } from './services/usersService';
 import { tools, themes, UserTools } from './hooks/useUser';
+import About from './components/About';
 
 
 
@@ -25,6 +26,8 @@ function App() {
   let [lightMode, setlightMode] = useState<boolean>(
     localStorage.getItem('LightMode') == "true" ? true : false
   );
+
+  let [searchInput, setSearchInput] = useState<string>("");
 
   let [flag, setFlag] = useState<boolean>()
 
@@ -49,10 +52,11 @@ function App() {
         <ToastContainer />
         <UserTools.Provider value={tools}>
           <Router>
-            <Navbar setTheme={handleTheme} lightMode={lightMode} setFlag={setFlag} flag={flag} />
+            <Navbar setInputRef={setSearchInput} inputRef={searchInput} setTheme={handleTheme} lightMode={lightMode} setFlag={setFlag} flag={flag} />
             <Routes>
-              <Route path='/' element={<Cards />}></Route>
+              <Route path='/' element={<Cards searchInput={searchInput as string} />}></Route>
               <Route path='/login' element={<Login />}></Route>
+              <Route path='/about' element={<About />}></Route>
               <Route path='/register' element={<Register />}></Route>
               <Route path='*' element={<PageNotFound />}></Route>
             </Routes>

@@ -2,6 +2,8 @@
 
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
+@import "./stylesheet/about.css";
+
 @import 'https://fonts.googleapis.com/css2?family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap';
 
 
@@ -26,7 +28,8 @@ i {
   cursor: pointer;
 }
 
-:root {
-  --title: ;
-  --subtitle: ;
+/* colors */
+.purple {
+  color: purple;
+  font-size: 1.2rem;
 }

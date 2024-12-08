@@ -1,5 +1,5 @@
 import { FunctionComponent, useContext, useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavigateFunction, NavLink, useNavigate } from "react-router-dom";
 import { searchCards } from "../services/cardsService";
 import { useDispatch } from "react-redux";
 
@@ -12,16 +12,28 @@ interface NavbarProps {
     lightMode?: boolean;
     setFlag: (flag: boolean) => void;
     flag?: boolean;
+    inputRef: any;
+    setInputRef: (str: string) => void;
 }
 
-const Navbar: FunctionComponent<NavbarProps> = ({ setTheme, lightMode, setFlag, flag }) => {
+const Navbar: FunctionComponent<NavbarProps> = ({ setTheme, lightMode, setFlag, flag, inputRef, setInputRef }) => {
     let userTools = useContext(UserTools)
     const dispatch = useDispatch<any>();
     let { user } = useUser()
+    let [signOut, setSignOut] = useState<boolean>(false);
+    const navigate: NavigateFunction = useNavigate()
+
+    let handleSignOut = () => {
+        localStorage.removeItem("token");
+        userTools.user.loggedIn = false;
+        setSignOut(true)
+        navigate('/')
+    }
 
 
 
     const handleSearch = async (searchQuery: string) => {
+        inputRef = searchQuery
         try {
             const filteredCards = await searchCards(searchQuery);
 
@@ -31,9 +43,6 @@ const Navbar: FunctionComponent<NavbarProps> = ({ setTheme, lightMode, setFlag, 
         }
     };
 
-    useEffect(() => {
-        setFlag(!flag)
-    }, [user])
 
 
 
@@ -51,6 +60,13 @@ const Navbar: FunctionComponent<NavbarProps> = ({ setTheme, lightMode, setFlag, 
                         <li className="nav-item">
                             <NavLink to={'/about'} className="nav-link" aria-current="page">About</NavLink>
                         </li>
+                        {userTools.user.loggedIn && <li>
+                            <NavLink to={'/fav-cards'} className="nav-link" aria-current="page">Fav Cards</NavLink>
+                        </li>}
+
+                        {user?.isBusiness && <li>
+                            <NavLink to={'/my-cards'} className="nav-link" aria-current="page">My Cards</NavLink>
+                        </li>}
 
                     </ul>
                     <form className="d-flex form-search gap-2" role="search">
@@ -60,8 +76,10 @@ const Navbar: FunctionComponent<NavbarProps> = ({ setTheme, lightMode, setFlag, 
                                 type="search"
                                 placeholder="Search"
                                 aria-label="Search"
+
                                 onChange={(e) => {
                                     handleSearch(e.target.value);
+                                    setInputRef(e.target.value)
                                 }}
                             />
 
@@ -78,19 +96,23 @@ const Navbar: FunctionComponent<NavbarProps> = ({ setTheme, lightMode, setFlag, 
 
             </div>
             <div className="collapse navbar-collapse loginNav text-light" id="navbarSupportedContent">
-                {userTools.user.loggedIn ? <div className="userIcon">
-                    {user?.image.url !== "" ? <img src={user?.image.url} alt="User Image" title={`${user?.name.first} ${user?.name.last} Icon`} onError={(e) => {
-                        e.currentTarget.src = "Images/DefaultUserImage.png";
-                        e.currentTarget.title = "default icon"
-                    }} /> : <img src="Images/DefaultUserImage.png" alt="Default Image" title="default icon" />}
-                </div> : <ul className="navbar-nav me-auto mb-lg-0">
+                {user &&
+                    userTools.user.loggedIn ? <div className="loggedIn"> <div className="userIcon">
+                        {user?.image.url !== "" ? <img src={user?.image.url} alt="User Image" title={`${user?.name.first} ${user?.name.last} Icon`} onError={(e) => {
+                            e.currentTarget.src = "Images/DefaultUserImage.png";
+                            e.currentTarget.title = "default icon"
+                        }} /> : <img src="Images/DefaultUserImage.png" alt="Default Image" title="default icon" />}
+
+
+                    </div>  <i onClick={handleSignOut} className="fa-solid fa-arrow-right-from-bracket"></i> </div> : <ul className="navbar-nav me-auto mb-lg-0">
                     <li className="nav-item">
                         <NavLink to={'/login'} className="nav-link" aria-current="page">Login</NavLink>
                     </li>
                     <li className="nav-item">
                         <NavLink to={'/register'} className="nav-link" aria-current="page">Signup</NavLink>
                     </li>
-                </ul>}
+                </ul>
+                }
 
             </div>
         </nav>

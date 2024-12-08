@@ -1,0 +1,264 @@
+.about-wraper {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+:root {
+    --color-1: #052b2f;
+    --color-2: #073438;
+    --color-3: #0e4b50;
+    --color-4: #2d8f85;
+    --color-5: #637c54;
+    --bar-bg: #e0e0e0;
+    --fill-color: linear-gradient(to right, #637c54, purple, rgb(224, 74, 74), #073438, #2d8f85, #637c54);
+}
+
+@property --gradient-angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+
+
+@keyframes rotation {
+    0% {
+        --gradient-angle: 0deg;
+        background-position: 0% 0%;
+    }
+
+    100% {
+        --gradient-angle: 360deg;
+        background-position: 100% 100%;
+    }
+}
+
+.techs {
+    height: fit-content;
+    margin-top: 2rem;
+    width: clamp(25%, 10vw + 1rem, 7rem);
+    padding: 20px 10px;
+    border-radius: 0.5em;
+    border: 5px solid transparent;
+    position: relative;
+    background: var(--color-1);
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+    transition: transform 0.2s ease-out;
+    will-change: transform;
+    transform: perspective(1000px) rotateX(10deg) rotateY(20deg);
+}
+
+.techs::before,
+.techs::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: conic-gradient(from var(--gradient-angle), var(--color-5), var(--color-3), var(--color-4), var(--color-5));
+    animation: rotation 15s linear infinite;
+}
+
+.techs::after {
+    filter: blur(1.5rem);
+}
+
+.techs img {
+    margin: 5px;
+    width: 50px;
+}
+
+
+
+/* analyst */
+.analyst {
+    color: #fff;
+    margin-top: 2rem;
+    width: clamp(70%, 10vw + 1rem, 7rem);
+    padding: 20px 10px;
+    border-radius: 0.5em;
+    border: 5px solid transparent;
+    position: relative;
+    background: var(--color-1);
+    transition: transform 0.2s ease-out;
+    will-change: transform;
+}
+
+.analyst::before,
+.analyst::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: conic-gradient(from var(--gradient-angle), var(--color-5), var(--color-3), var(--color-4), var(--color-5));
+    animation: rotation 15s linear infinite;
+}
+
+.analyst::after {
+    filter: blur(1.5rem);
+}
+
+.multigraph {
+    width: 7rem;
+    height: 80px;
+    position: relative;
+}
+
+
+.counter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+}
+
+.multigraph .title {
+    position: absolute;
+    top: 90%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+    text-decoration: underline;
+}
+
+
+.graph {
+    width: 160px;
+    height: 60px;
+    position: absolute;
+    overflow: hidden;
+    bottom: 20px;
+}
+
+.graph:before {
+    width: 120px;
+    height: 60px;
+    position: absolute;
+    top: 100%;
+    border: 12px solid rgb(66, 255, 66);
+    content: '';
+    border-radius: 0 0 300px 300px;
+    border-top: none;
+    animation: demo 3s;
+    transform-origin: center top;
+    transform: rotate(180deg)
+}
+
+
+
+@keyframes demo {
+    0% {
+        transform: rotate(0deg)
+    }
+
+    100% {
+        transform: rotate(180deg)
+    }
+}
+
+
+/* topCards */
+.topCards {
+    width: 100%;
+    margin-top: 2.5rem;
+    text-align: center;
+    position: relative;
+}
+
+.topCards .card {
+    width: 100%;
+    margin-top: 2rem;
+    height: fit-content;
+    align-items: center;
+    background: transparent;
+    border: none;
+    color: #e0e0e0;
+}
+
+
+.place1 {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.place2,
+.place3 {
+    position: relative;
+}
+
+.place1 img[alt="crown"],
+.place2 img[alt="crown"],
+.place3 img[alt="crown"] {
+    width: 50px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    z-index: 2;
+    transform: translate(-50%, 0);
+}
+
+.topCards .card img {
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+
+}
+
+.podium {
+    width: 60%;
+    margin: 2rem auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+
+.podiumImg {
+    width: 60%;
+    height: 30px;
+    margin-top: -2rem;
+    filter: drop-shadow(0 0 8px #ccc);
+}
+
+.quantity {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Large Phones */
+@media(max-width: 991px) {
+
+    .podiumImg,
+    .podium {
+        width: 90%;
+    }
+}
+
+
+/* medium phones */
+@media(max-width: 691px) {
+
+    .techs {
+        width: 100%;
+        transform: rotateX(0) rotateY(0) !important;
+    }
+
+    .about-wraper {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        margin: 0 auto;
+    }
+
+    .analyst {
+        width: 100%;
+    }
+}

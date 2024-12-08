@@ -39,3 +39,18 @@ export function isValidImageUrl(url: string): Promise<boolean> {
         return img.src = url;
     });
 }
+
+export function getCardById(id: string) {
+    return axios.get(`${api}/${id}`)
+}
+
+
+// like the card
+/* export async function like(id: string) {
+    let response = await getCardById(id)
+    let cardData: Card = response.data
+
+    
+
+}
+ */

@@ -60,7 +60,10 @@ const Register: FunctionComponent<RegisterProps> = () => {
         }),
 
         onSubmit: (values) => {
-            register(values).then(() => successMsg("Welcome To BCard good to have you here")).catch((err) => errorMsg(`Error: ${err}`))
+            register(values).then(() => {
+                successMsg("Welcome To BCard good to have you here");
+                navigate('/')
+            }).catch((err) => errorMsg(`Error: ${err}`))
             console.log(values);
 
         }
@@ -305,7 +308,8 @@ const Register: FunctionComponent<RegisterProps> = () => {
                 </div>
             </div>
             <div className="form-check w-75 m-auto mb-3 text-warning">
-                <input className="form-check-input" type="checkbox" value={formik.values.isBusiness} id="flexCheckDefault" />
+                <input className="form-check-input" type="checkbox" value={formik.values.isBusiness} onChange={formik.handleChange}
+                    onBlur={formik.handleBlur} name="isBusiness" id="flexCheckDefault" />
                 <label className="form-check-label" htmlFor="flexCheckDefault" >
                     Signup as business
                 </label>

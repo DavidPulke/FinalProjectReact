@@ -3,6 +3,10 @@
         display: grid;
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .cards .card {
+        animation-range: entry 0% cover 30%;
+    }
 }
 
 
