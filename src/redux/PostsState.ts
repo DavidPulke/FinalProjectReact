@@ -14,6 +14,7 @@ export enum CardsActionType {
     DeleteCard = "DeleteCard",
     SetAllCards = "SetAllCards",
     FilterCards = "FilterCards",
+    UpdateCardLikes = "UpdateCardLikes",
 }
 
 // Action
@@ -44,6 +45,15 @@ export function filterCardsAction(filteredCards: Card[]): CardsAction {
     return { type: CardsActionType.FilterCards, payload: filteredCards };
 }
 
+export function updateCardLikesAction(updatedCard: Card): CardsAction {
+    return {
+        type: CardsActionType.UpdateCardLikes,  // ודא ששימוש בפעולה הנכונה
+        payload: updatedCard,
+    };
+}
+
+
+
 // reducer
 export function cardsReducer(currentState: CardsState = new CardsState(), action: CardsAction): CardsState {
     const newState = { ...currentState, cards: [...currentState.cards] };
@@ -72,11 +82,18 @@ export function cardsReducer(currentState: CardsState = new CardsState(), action
             newState.cards = action.payload;
             break;
 
+
+        case CardsActionType.UpdateCardLikes:
+            const cardIndex = newState.cards.findIndex((card) => card._id === action.payload._id);
+            if (cardIndex !== -1) {
+                newState.cards[cardIndex] = action.payload;
+            }
+            break;
+
+
         default:
             break;
     }
 
     return newState;
 }
-
-

@@ -1,5 +1,5 @@
 import { FunctionComponent, useContext, useEffect, useState } from "react";
-import { getAllCards } from "../services/cardsService";
+import { cardLikes, getAllCards, like } from "../services/cardsService";
 import Card from "../interfaces/Card";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
@@ -8,6 +8,7 @@ import { errorMsg } from "../services/feedbackService";
 import CustomPagination from "./tools/CustomPagination";
 import { UserTools, useUser } from "../hooks/useUser";
 import { useCards } from "../hooks/useCards";
+import LikeButton from "./tools/LikeButton";
 
 interface CardsProps {
     searchInput: string;
@@ -49,7 +50,7 @@ const Cards: FunctionComponent<CardsProps> = ({ searchInput }) => {
                 return <div className="card" key={card._id}>
                     <div className="cardTools">
                         <a className="phone" href={`tel:${card.phone}`}><i className="fa-solid fa-phone"></i></a>
-                        {userTools.user.loggedIn && <i onClick={() => handleLike()} className={`fa-${show ? "solid" : "regular"} fa-heart`}></i>}
+                        {userTools.user.loggedIn && <LikeButton cardId={card._id as string} userId={user?._id as string} />}
                     </div>
 
                     <img
@@ -75,7 +76,7 @@ const Cards: FunctionComponent<CardsProps> = ({ searchInput }) => {
                     <div className="cardTools">
                         <a className="phone" href={`tel:${card.phone}`}><i className="fa-solid fa-phone"></i></a>
 
-                        {userTools.user.loggedIn && <i onClick={() => handleLike()} className={`fa-${show ? "solid" : "regular"} fa-heart`}></i>}
+                        {userTools.user.loggedIn && <LikeButton cardId={card._id as string} userId={user?._id as string} />}
                     </div>
 
                     <img

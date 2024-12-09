@@ -14,6 +14,7 @@ import store from './redux/store';
 import { getUserDetails } from './services/usersService';
 import { tools, themes, UserTools } from './hooks/useUser';
 import About from './components/About';
+import { CardProvider } from './context/CardContext';
 
 
 
@@ -48,22 +49,27 @@ function App() {
 
   return (
     <Provider store={store} >
+
       <div className="App" style={lightMode ? { color: themes.dark.color, background: themes.dark.background } : { color: themes.light.color, background: themes.light.background }} >
+
         <ToastContainer />
         <UserTools.Provider value={tools}>
-          <Router>
-            <Navbar setInputRef={setSearchInput} inputRef={searchInput} setTheme={handleTheme} lightMode={lightMode} setFlag={setFlag} flag={flag} />
-            <Routes>
-              <Route path='/' element={<Cards searchInput={searchInput as string} />}></Route>
-              <Route path='/login' element={<Login />}></Route>
-              <Route path='/about' element={<About />}></Route>
-              <Route path='/register' element={<Register />}></Route>
-              <Route path='*' element={<PageNotFound />}></Route>
-            </Routes>
-            <Footer />
-          </Router>
+          <CardProvider>
+            <Router>
+              <Navbar setInputRef={setSearchInput} inputRef={searchInput} setTheme={handleTheme} lightMode={lightMode} setFlag={setFlag} flag={flag} />
+              <Routes>
+                <Route path='/' element={<Cards searchInput={searchInput as string} />}></Route>
+                <Route path='/login' element={<Login />}></Route>
+                <Route path='/about' element={<About />}></Route>
+                <Route path='/register' element={<Register />}></Route>
+                <Route path='*' element={<PageNotFound />}></Route>
+              </Routes>
+              <Footer />
+            </Router>
+          </CardProvider>
         </UserTools.Provider>
       </div>
+
     </Provider>);
 }
 

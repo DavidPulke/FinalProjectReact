@@ -62,7 +62,7 @@ const Register: FunctionComponent<RegisterProps> = () => {
         onSubmit: (values) => {
             register(values).then(() => {
                 successMsg("Welcome To BCard good to have you here");
-                navigate('/')
+                navigate('/login')
             }).catch((err) => errorMsg(`Error: ${err}`))
             console.log(values);
 

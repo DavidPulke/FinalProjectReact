@@ -16,6 +16,7 @@ export interface Image {
 
 
 export default interface Card {
+    unshift(userId: string): unknown
     _id?: string,
     title: string,
     subtitle?: string,
