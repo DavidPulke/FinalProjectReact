@@ -86,6 +86,8 @@ section {
   margin-top: 6rem;
 }
 
+
+
 .cards {
   width: 90%;
   margin: 2rem auto;
@@ -189,6 +191,19 @@ section {
   transform: translate(-50%, 0);
 }
 
+.topPageNav {
+  width: 50%;
+  max-height: fit-content;
+  display: grid;
+  place-content: center;
+  margin: 0 auto;
+}
+
+.topPageNav .pagesNav {
+  position: relative;
+  bottom: 0;
+}
+
 
 
 /* Login */
@@ -252,6 +267,7 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
+
   box-shadow: 0 0px 10px #cccccc80;
   opacity: 0.95;
 }
@@ -259,7 +275,7 @@ footer {
 footer ul {
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   padding: 0;
 }

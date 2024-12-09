@@ -1,24 +1,19 @@
 import { FunctionComponent, useContext, useEffect, useState } from "react";
-import { cardLikes, getAllCards, like } from "../services/cardsService";
 import Card from "../interfaces/Card";
-import { useDispatch, useSelector } from "react-redux";
-import { Dispatch } from "redux";
-import { CardsAction, setAllCardsAction } from "../redux/PostsState";
-import { errorMsg } from "../services/feedbackService";
 import CustomPagination from "./tools/CustomPagination";
 import { UserTools, useUser } from "../hooks/useUser";
-import { useCards } from "../hooks/useCards";
 import LikeButton from "./tools/LikeButton";
+import { userLikes } from "../services/cardsService";
 
-interface CardsProps {
+interface FavCardsProps {
     searchInput: string;
 }
 
-const Cards: FunctionComponent<CardsProps> = ({ searchInput }) => {
-    let { cards, isLoading } = useCards()
+const FavCards: FunctionComponent<FavCardsProps> = ({ searchInput }) => {
     let userTools = useContext(UserTools);
     let { user } = useUser()
-    let [show, setShow] = useState<boolean>(false)
+    let [isLoading, setIsLoading] = useState<boolean>(true)
+    const [likedCards, setLikedCards] = useState<Card[]>([]);
 
 
 
@@ -27,10 +22,15 @@ const Cards: FunctionComponent<CardsProps> = ({ searchInput }) => {
     const [itemsPerPage] = useState<number>(8);
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentCards = cards.slice(indexOfFirstItem, indexOfLastItem);
+    const currentCards = likedCards.slice(indexOfFirstItem, indexOfLastItem);
 
-
-
+    useEffect(() => {
+        const fetchLikedCards = async () => {
+            const liked = await userLikes(user?._id as string);
+            setLikedCards(liked);
+        };
+        fetchLikedCards();
+    }, [user?._id]);
 
 
 
@@ -38,45 +38,48 @@ const Cards: FunctionComponent<CardsProps> = ({ searchInput }) => {
 
 
     return (<section className="text-center">
-
-        <h1>Cards Page</h1>
-        {searchInput == "" && <div className="topPageNav mt-5">< CustomPagination
-            totalItems={cards.length}
+        <h2><span className="logo">{user?.name.first} {user?.name.last}</span> Favorite Cards</h2>
+        {searchInput == "" && likedCards.length > 5 && <div className="topPageNav mt-5">< CustomPagination
+            totalItems={likedCards.length}
             itemsPerPage={itemsPerPage}
             currentPage={currentPage}
             onPageChange={(page) => setCurrentPage(page)}
         /></div>}
         <div className="cards">
-            {isLoading && <div className="spinner-border" role="status">
+            {/* {isLoading && <div className="spinner-border" role="status">
+                <span className="sr-only">Loading...</span>
+            </div>} */}
+
+            {searchInput === "" && currentCards.length > 0 ? currentCards.map((card: Card) => {
+                /* isLoading && setIsLoading(false) */
+                return <div className="card" key={card._id}>
+                    <div className="cardTools">
+                        <a className="phone" href={`tel:${card.phone}`}><i className="fa-solid fa-phone"></i></a>
+                        {userTools.user.loggedIn && <LikeButton cardId={card._id as string} userId={user?._id as string} />}
+                    </div>
+
+                    <img
+                        src={card.image.url}
+                        alt={card.image.alt}
+                        title={card.title}
+                        onError={(e) => {
+                            e.currentTarget.src = "Images/DefaultCardImage.gif";
+                        }}
+                    />
+                    <div className="card-data">
+                        <h3>{card.title}</h3>
+                        <h5>{card.subtitle}</h5>
+                        <hr />
+                        <p><strong>Phone:</strong> {card.phone}</p>
+                        <p><strong>Address:</strong> {card.address.country}, {card.address.city}, {card.address.street}</p>
+                        <p><strong>Card Number: </strong>{card.bizNumber}</p>
+                    </div>
+                </div>
+            }) : isLoading && <div className="spinner-border" role="status">
                 <span className="sr-only">Loading...</span>
             </div>}
-
-            {searchInput == "" && currentCards.length > 0 && currentCards.map((card: Card) => {
-                return <div className="card" key={card._id}>
-                    <div className="cardTools">
-                        <a className="phone" href={`tel:${card.phone}`}><i className="fa-solid fa-phone"></i></a>
-                        {userTools.user.loggedIn && <LikeButton cardId={card._id as string} userId={user?._id as string} />}
-                    </div>
-
-                    <img
-                        src={card.image.url}
-                        alt={card.image.alt}
-                        title={card.title}
-                        onError={(e) => {
-                            e.currentTarget.src = "Images/DefaultCardImage.gif";
-                        }}
-                    />
-                    <div className="card-data">
-                        <h3>{card.title}</h3>
-                        <h5>{card.subtitle}</h5>
-                        <hr />
-                        <p><strong>Phone:</strong> {card.phone}</p>
-                        <p><strong>Address:</strong> {card.address.country}, {card.address.city}, {card.address.street}</p>
-                        <p><strong>Card Number: </strong>{card.bizNumber}</p>
-                    </div>
-                </div>
-            })}
-            {searchInput !== "" && cards.length > 0 && cards.map((card: Card) => {
+            {searchInput !== "" && likedCards.length > 0 && likedCards.map((card: Card) => {
+                isLoading && setIsLoading(false)
                 return <div className="card" key={card._id}>
                     <div className="cardTools">
                         <a className="phone" href={`tel:${card.phone}`}><i className="fa-solid fa-phone"></i></a>
@@ -102,12 +105,12 @@ const Cards: FunctionComponent<CardsProps> = ({ searchInput }) => {
                     </div>
                 </div>
             })}
-            {!isLoading && cards.length <= 0 && currentCards.length <= 0 && <div id="searchError"><h1 className="text-warning">No results found!</h1></div>}
+            {!isLoading && likedCards.length <= 0 && currentCards.length <= 0 && <div className=" mt-5 container" id="searchError"><h1 className="text-warning">You Have No Favorites! You should Like some business to see them here :\</h1></div>}
 
         </div>
 
-        {searchInput == "" && < CustomPagination
-            totalItems={cards.length}
+        {searchInput === "" && < CustomPagination
+            totalItems={likedCards.length}
             itemsPerPage={itemsPerPage}
             currentPage={currentPage}
             onPageChange={(page) => setCurrentPage(page)}
@@ -117,4 +120,4 @@ const Cards: FunctionComponent<CardsProps> = ({ searchInput }) => {
 
 }
 
-export default Cards;
+export default FavCards;

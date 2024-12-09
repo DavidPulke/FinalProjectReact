@@ -20,9 +20,11 @@ export const CardProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 if (card._id === cardId) {
                     const updatedLikes = card.likes?.includes(userId)
                         ? card.likes.filter((like) => like !== userId)
-                        : [...(card.likes || []), userId];
+                        : [...(card.likes || ["a"]), userId];
                     return { ...card, likes: updatedLikes };
                 }
+
+
                 return card;
             });
         });

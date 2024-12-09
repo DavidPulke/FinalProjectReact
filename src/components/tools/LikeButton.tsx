@@ -11,9 +11,11 @@ const LikeButton: FunctionComponent<LikeButtonProps> = ({ cardId, userId }) => {
     const [asLike, setAsLike] = useState<boolean>(false);
     const { updateCardLikes } = useCardContext();
 
-    // נבדוק אם הלייק כבר קיים כשנטען הכרטיס
+
     useEffect(() => {
         const fetchLikes = async () => {
+
+
             const likes = await cardLikes(cardId);
             setAsLike(likes.includes(userId));
         };
@@ -21,6 +23,7 @@ const LikeButton: FunctionComponent<LikeButtonProps> = ({ cardId, userId }) => {
     }, [cardId, userId]);
 
     const handleLikeClick = async () => {
+
         updateCardLikes(cardId, userId);
         setAsLike(!asLike);
         await like(cardId, userId);

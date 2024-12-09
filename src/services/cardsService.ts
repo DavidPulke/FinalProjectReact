@@ -59,6 +59,26 @@ export async function cardLikes(id: string) {
     return cardData;
 };
 
+export async function userLikes(userId: string) {
+    try {
+
+        const response = await getAllCards();
+        const cardsData = response.data;
+
+
+        if (cardsData.length > 0) {
+            const userLikedCards = cardsData.filter((card: Card) => card.likes?.includes(userId));
+            return userLikedCards;
+        }
+
+        return [];
+    } catch (error) {
+        console.log(error);
+        return [];
+    }
+}
+
+
 
 
 export async function like(id: string, userId: string) {
@@ -76,8 +96,6 @@ export async function like(id: string, userId: string) {
             await axios.patch(`${api}/${id}`, {
                 likes: cardData
             }, { headers: { 'x-auth-token': localStorage.token } });
-
-            console.log("like added");
         }
     } catch (error) {
         console.log(error);
