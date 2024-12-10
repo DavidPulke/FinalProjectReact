@@ -4,7 +4,7 @@ import Card from "../interfaces/Card"
 
 // App State
 export class CardsState {
-    public cards: Card[] = []
+    public cards: Card[] = [];
 }
 
 // Action Type
@@ -15,6 +15,7 @@ export enum CardsActionType {
     SetAllCards = "SetAllCards",
     FilterCards = "FilterCards",
     UpdateCardLikes = "UpdateCardLikes",
+    getAllMyCards = "getAllMyCards",
 }
 
 // Action
@@ -52,6 +53,10 @@ export function updateCardLikesAction(updatedCard: Card): CardsAction {
     };
 }
 
+export function getAllMyCardsAction(cards: Card[]): CardsAction {
+    return { type: CardsActionType.SetAllCards, payload: cards }
+}
+
 
 
 // reducer
@@ -75,6 +80,10 @@ export function cardsReducer(currentState: CardsState = new CardsState(), action
             break;
 
         case CardsActionType.SetAllCards:
+            newState.cards = action.payload;
+            break;
+
+        case CardsActionType.getAllMyCards:
             newState.cards = action.payload;
             break;
 

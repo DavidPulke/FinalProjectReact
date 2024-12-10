@@ -16,6 +16,7 @@ import { tools, themes, UserTools } from './hooks/useUser';
 import About from './components/About';
 import { CardProvider } from './context/CardContext';
 import FavCards from './components/FavCards';
+import MyCards from './components/MyCards';
 
 
 
@@ -63,6 +64,7 @@ function App() {
                 <Route path='/login' element={<Login />}></Route>
                 <Route path='/about' element={<About />}></Route>
                 <Route path='/register' element={<Register />}></Route>
+                <Route path='/my-cards' element={<MyCards />}></Route>
                 <Route path='/fav-cards' element={<FavCards searchInput={searchInput as string} />}></Route>
                 <Route path='*' element={<PageNotFound />}></Route>
               </Routes>

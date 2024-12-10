@@ -102,3 +102,9 @@ export async function like(id: string, userId: string) {
     }
 };
 
+
+// get my cards
+
+export function getAllMyCards() {
+    return axios.get(`${api}/my-cards`, { headers: { 'x-auth-token': localStorage.token } })
+}
