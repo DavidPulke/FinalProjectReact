@@ -96,15 +96,15 @@ const Navbar: FunctionComponent<NavbarProps> = ({ setTheme, lightMode, setFlag, 
 
             </div>
             <div className="collapse navbar-collapse loginNav text-light" id="navbarSupportedContent">
-                {user &&
+                {user != undefined &&
                     userTools.user.loggedIn ? <div className="loggedIn"> <div className="userIcon">
-                        {user?.image.url !== "" ? <img src={user?.image.url} alt="User Image" title={`${user?.name.first} ${user?.name.last} Icon`} onError={(e) => {
+                        {user.image.url !== "" ? <img src={user.image.url} alt="User Image" title={`${user.name.first} ${user?.name.last} Icon`} onError={(e) => {
                             e.currentTarget.src = "Images/DefaultUserImage.png";
                             e.currentTarget.title = "default icon"
                         }} /> : <img src="Images/DefaultUserImage.png" alt="Default Image" title="default icon" />}
+                    </div>
 
-
-                    </div>  <i onClick={handleSignOut} className="fa-solid fa-arrow-right-from-bracket"></i> </div> : <ul className="navbar-nav me-auto mb-lg-0">
+                    <i onClick={handleSignOut} className="fa-solid fa-arrow-right-from-bracket"></i> </div> : <ul className="navbar-nav me-auto mb-lg-0">
                     <li className="nav-item">
                         <NavLink to={'/login'} className="nav-link" aria-current="page">Login</NavLink>
                     </li>

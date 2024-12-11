@@ -17,6 +17,7 @@ import About from './components/About';
 import { CardProvider } from './context/CardContext';
 import FavCards from './components/FavCards';
 import MyCards from './components/MyCards';
+import CardData from './components/CardData';
 
 
 
@@ -65,6 +66,7 @@ function App() {
                 <Route path='/about' element={<About />}></Route>
                 <Route path='/register' element={<Register />}></Route>
                 <Route path='/my-cards' element={<MyCards />}></Route>
+                <Route path='/card-data/:cardId' element={<CardData />}></Route>
                 <Route path='/fav-cards' element={<FavCards searchInput={searchInput as string} />}></Route>
                 <Route path='*' element={<PageNotFound />}></Route>
               </Routes>

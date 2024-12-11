@@ -40,6 +40,28 @@
         transform: translate(-50%, 0);
     }
 
+    html .card-data-solo {
+        grid-template-columns: repeat(1, 1fr);
+        gap: 2rem;
+    }
+
+    .card-data-solo .cardHero {
+        border-bottom: 2px solid #ccc;
+    }
+
+    .footerWraper {
+        height: 140px;
+        position: relative;
+    }
+
+    .card-data-solo img {
+        margin-bottom: 2rem;
+    }
+
+    html #map {
+        height: 500px !important;
+    }
+
     nav .loginNav {
         transform: translateY(-10px);
         padding-left: 12px;

@@ -9,6 +9,7 @@ import CustomPagination from "./tools/CustomPagination";
 import { UserTools, useUser } from "../hooks/useUser";
 import { useCards } from "../hooks/useCards";
 import LikeButton from "./tools/LikeButton";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 
 interface CardsProps {
     searchInput: string;
@@ -18,7 +19,7 @@ const Cards: FunctionComponent<CardsProps> = ({ searchInput }) => {
     let { cards, isLoading } = useCards()
     let userTools = useContext(UserTools);
     let { user } = useUser()
-    let [show, setShow] = useState<boolean>(false)
+    const navigate: NavigateFunction = useNavigate()
 
 
 
@@ -52,7 +53,7 @@ const Cards: FunctionComponent<CardsProps> = ({ searchInput }) => {
             </div>}
 
             {searchInput == "" && currentCards.length > 0 && currentCards.map((card: Card) => {
-                return <div className="card" key={card._id}>
+                return <div onClick={() => navigate(`/card-data/${card._id}`)} className="card" key={card._id}>
                     <div className="cardTools">
                         <a className="phone" href={`tel:${card.phone}`}><i className="fa-solid fa-phone"></i></a>
                         {userTools.user.loggedIn && <LikeButton cardId={card._id as string} userId={user?._id as string} />}
