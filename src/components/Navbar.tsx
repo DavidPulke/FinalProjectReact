@@ -96,6 +96,9 @@ const Navbar: FunctionComponent<NavbarProps> = ({ setTheme, lightMode, setFlag, 
 
             </div>
             <div className="collapse navbar-collapse loginNav text-light" id="navbarSupportedContent">
+
+
+
                 {user != undefined &&
                     userTools.user.loggedIn ? <div className="loggedIn"> <div className="userIcon">
                         {user.image.url !== "" ? <img src={user.image.url} alt="User Image" title={`${user.name.first} ${user?.name.last} Icon`} onError={(e) => {

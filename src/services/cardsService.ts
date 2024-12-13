@@ -108,3 +108,12 @@ export async function like(id: string, userId: string) {
 export function getAllMyCards() {
     return axios.get(`${api}/my-cards`, { headers: { 'x-auth-token': localStorage.token } })
 }
+
+export function createCard(card: Card) {
+    return axios.post(api, card, { headers: { 'x-auth-token': localStorage.token } })
+}
+
+
+export function deleteCard(cardId: string) {
+    return axios.delete(`${api}/${cardId}`, { headers: { 'x-auth-token': localStorage.token } })
+}

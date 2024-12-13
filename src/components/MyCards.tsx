@@ -1,12 +1,14 @@
 import { Dispatch, FunctionComponent, useContext, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { CardsAction, getAllMyCardsAction, setAllCardsAction } from "../redux/PostsState";
-import { getAllMyCards } from "../services/cardsService";
+import { deleteCard, getAllMyCards } from "../services/cardsService";
 import { useMyCards } from "../hooks/useMyCards";
 import { UserTools, useUser } from "../hooks/useUser";
 import Card from "../interfaces/Card";
 import LikeButton from "./tools/LikeButton";
 import AddCardModal from "./Modals/AddCardModal";
+import { NavigateFunction, useNavigate } from "react-router-dom";
+import { successMsg } from "../services/feedbackService";
 
 interface MyCardsProps {
 
@@ -15,30 +17,42 @@ interface MyCardsProps {
 const MyCards: FunctionComponent<MyCardsProps> = () => {
     const [openAddModal, setOpenAddModal] = useState<boolean>(false);
     let [flag, setFlag] = useState<boolean>(false);
+    const navigate: NavigateFunction = useNavigate()
 
     let handleAddProduct = () => {
         setOpenAddModal(true);
     };
 
+    let handleDeleteCard = (cardId: string) => {
+
+        if (prompt("This card would be DELETED permanently!!. please type yes, if you want to Delete this card!") == "yes") {
+            deleteCard(cardId).then(() => {
+                successMsg("Your Card as been DELETED successfuly");
+                refresh()
+            }).catch((err) => console.log(err))
+        }
+    }
+
     let refresh = () => {
         setFlag(!flag)
     };
-    let { cards, isLoading } = useMyCards()
+    let { cards, isLoading } = useMyCards(refresh)
     let userTools = useContext(UserTools);
     let { user } = useUser()
-    useEffect(() => {
-        console.log(cards);
-    }, [])
 
-    return (<section className="container text-center">
+
+    return (<section className=" text-center">
         <h2>My Cards</h2>
         <div className="cards">
             {cards.length > 0 && cards.map((card: Card) => {
                 return <div className="card" key={card._id}>
+                    <i onClick={() => navigate(`/card-data/${card._id}`)} className="fa-solid fa-eye"></i>
                     <div className="cardTools">
                         <a className="phone" href={`tel:${card.phone}`}><i className="fa-solid fa-phone"></i></a>
 
                         {userTools.user.loggedIn && <LikeButton cardId={card._id as string} userId={user?._id as string} />}
+                        {user?.isBusiness && <i className="fa-regular fa-pen-to-square text-warning"></i>}
+                        {user?.isBusiness && <i className="fa-regular fa-trash-can text-danger" onClick={() => handleDeleteCard(card._id as string)}></i>}
                     </div>
 
                     <img
@@ -66,7 +80,9 @@ const MyCards: FunctionComponent<MyCardsProps> = () => {
             <button onClick={() => handleAddProduct()} className="btn btn-outline-primary mt-3">
                 Add Your Business Card
             </button>
-        </div> : <p>add side Card</p>}
+        </div> : <button onClick={() => handleAddProduct()} className="btn btn-outline-primary mt-3">
+            Add Your Business Card
+        </button>}
 
         <AddCardModal onHide={() => setOpenAddModal(false)} refresh={refresh} show={openAddModal} />
     </section>);

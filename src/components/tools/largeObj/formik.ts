@@ -22,4 +22,27 @@ export const initialValues =
         zip: 0,
     },
     isBusiness: false
+};
+
+const cardInitValues = {
+    title: "",
+    subtitle: "",
+    description: "",
+    phone: "",
+    email: "",
+    web: "",
+    image: {
+        url: "",
+        alt: ""
+    },
+    address: {
+        state: "",
+        country: "",
+        city: "",
+        street: "",
+        houseNumber: 0,
+        zip: 0,
+    }
 }
+
+export default cardInitValues

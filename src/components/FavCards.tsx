@@ -4,6 +4,7 @@ import CustomPagination from "./tools/CustomPagination";
 import { UserTools, useUser } from "../hooks/useUser";
 import LikeButton from "./tools/LikeButton";
 import { userLikes } from "../services/cardsService";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 
 interface FavCardsProps {
     searchInput: string;
@@ -14,7 +15,7 @@ const FavCards: FunctionComponent<FavCardsProps> = ({ searchInput }) => {
     let { user } = useUser()
     let [isLoading, setIsLoading] = useState<boolean>(true)
     const [likedCards, setLikedCards] = useState<Card[]>([]);
-
+    const navigate: NavigateFunction = useNavigate()
 
 
     // Pagenation
@@ -53,6 +54,7 @@ const FavCards: FunctionComponent<FavCardsProps> = ({ searchInput }) => {
             {searchInput === "" && currentCards.length > 0 ? currentCards.map((card: Card) => {
                 /* isLoading && setIsLoading(false) */
                 return <div className="card" key={card._id}>
+                    <i onClick={() => navigate(`/card-data/${card._id}`)} className="fa-solid fa-eye"></i>
                     <div className="cardTools">
                         <a className="phone" href={`tel:${card.phone}`}><i className="fa-solid fa-phone"></i></a>
                         {userTools.user.loggedIn && <LikeButton cardId={card._id as string} userId={user?._id as string} />}
@@ -81,6 +83,7 @@ const FavCards: FunctionComponent<FavCardsProps> = ({ searchInput }) => {
             {searchInput !== "" && likedCards.length > 0 && likedCards.map((card: Card) => {
                 isLoading && setIsLoading(false)
                 return <div className="card" key={card._id}>
+                    <i onClick={() => navigate(`/card-data/${card._id}`)} className="fa-solid fa-eye"></i>
                     <div className="cardTools">
                         <a className="phone" href={`tel:${card.phone}`}><i className="fa-solid fa-phone"></i></a>
 

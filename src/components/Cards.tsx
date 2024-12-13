@@ -31,13 +31,6 @@ const Cards: FunctionComponent<CardsProps> = ({ searchInput }) => {
     const currentCards = cards.slice(indexOfFirstItem, indexOfLastItem);
 
 
-
-
-
-
-
-
-
     return (<section className="text-center">
 
         <h1>Cards Page</h1>
@@ -53,7 +46,8 @@ const Cards: FunctionComponent<CardsProps> = ({ searchInput }) => {
             </div>}
 
             {searchInput == "" && currentCards.length > 0 && currentCards.map((card: Card) => {
-                return <div onClick={() => navigate(`/card-data/${card._id}`)} className="card" key={card._id}>
+                return <div className="card" key={card._id}>
+                    <i onClick={() => navigate(`/card-data/${card._id}`)} className="fa-solid fa-eye"></i>
                     <div className="cardTools">
                         <a className="phone" href={`tel:${card.phone}`}><i className="fa-solid fa-phone"></i></a>
                         {userTools.user.loggedIn && <LikeButton cardId={card._id as string} userId={user?._id as string} />}
@@ -79,6 +73,7 @@ const Cards: FunctionComponent<CardsProps> = ({ searchInput }) => {
             })}
             {searchInput !== "" && cards.length > 0 && cards.map((card: Card) => {
                 return <div className="card" key={card._id}>
+                    <i onClick={() => navigate(`/card-data/${card._id}`)} className="fa-solid fa-eye"></i>
                     <div className="cardTools">
                         <a className="phone" href={`tel:${card.phone}`}><i className="fa-solid fa-phone"></i></a>
 

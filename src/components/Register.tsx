@@ -8,7 +8,8 @@ import { User } from "../interfaces/User";
 import { successMsg, errorMsg } from "../services/feedbackService";
 import { register } from "../services/usersService";
 import * as yup from "yup"
-import { initialValues } from "./tools/largeObj/registerFormik";
+import { initialValues } from "./tools/largeObj/formik";
+
 
 
 
@@ -84,7 +85,7 @@ const Register: FunctionComponent<RegisterProps> = () => {
                             className="form-control"
                             id="floatingfirst"
                             placeholder="first"
-                            name="name.first" // הוספת נתיב מלא
+                            name="name.first"
                             onBlur={formik.handleBlur}
                             onChange={formik.handleChange}
                         />
@@ -147,7 +148,7 @@ const Register: FunctionComponent<RegisterProps> = () => {
                             className="form-control"
                             id="floatingphone"
                             placeholder="Phone"
-                            name="phone" // פשוט 'phone'
+                            name="phone"
                             onBlur={formik.handleBlur}
                             onChange={formik.handleChange}
                             value={formik.values.phone} // ערך

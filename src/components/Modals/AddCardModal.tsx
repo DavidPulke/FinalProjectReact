@@ -18,8 +18,8 @@ const AddCardModal: FunctionComponent<AddCardModalProps> = ({ onHide, refresh, s
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
-            <Modal.Header closeButton className="bg-warning text-light">
-                <Modal.Title className="text-dark" id="contained-modal-title-vcenter">
+            <Modal.Header closeButton className="bg-primary">
+                <Modal.Title className="text-light" id="contained-modal-title-vcenter">
                     Add Your Business Card
                 </Modal.Title>
             </Modal.Header>

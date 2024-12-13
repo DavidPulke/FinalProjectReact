@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useLoadScript } from "@react-google-maps/api";
 
-// הגדרת פרטי המפה
+
 const MAP_API_KEY = process.env.REACT_APP_GOOGLE_MAP_KEY!;
 const MAP_CONTAINER_STYLE = {
     width: '100%',
@@ -15,7 +15,7 @@ const MapComponent = ({ address }: { address: string }) => {
         googleMapsApiKey: MAP_API_KEY,
     });
 
-    // משתמשים ב-Geocoder כדי להמיר כתובת לנקודות גיאוגרפיות
+
     useEffect(() => {
         if (isLoaded && address) {
             const geocoder = new google.maps.Geocoder();
@@ -28,7 +28,7 @@ const MapComponent = ({ address }: { address: string }) => {
         }
     }, [address, isLoaded]);
 
-    // הטעינה של המפה והסמן הבסיסי
+
     useEffect(() => {
         if (isLoaded && coordinates) {
             const mapDiv = document.getElementById('map');
@@ -38,7 +38,7 @@ const MapComponent = ({ address }: { address: string }) => {
                     zoom: 10,
                 });
 
-                // יצירת סמן בסיסי
+
                 const marker = new google.maps.Marker({
                     position: coordinates,
                     map,
