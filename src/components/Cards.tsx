@@ -1,10 +1,7 @@
 import { FunctionComponent, useContext, useEffect, useState } from "react";
-import { cardLikes, getAllCards, like } from "../services/cardsService";
+import { deleteCard } from "../services/cardsService";
 import Card from "../interfaces/Card";
-import { useDispatch, useSelector } from "react-redux";
-import { Dispatch } from "redux";
-import { CardsAction, setAllCardsAction } from "../redux/PostsState";
-import { errorMsg } from "../services/feedbackService";
+import { successMsg } from "../services/feedbackService";
 import CustomPagination from "./tools/CustomPagination";
 import { UserTools, useUser } from "../hooks/useUser";
 import { useCards } from "../hooks/useCards";
@@ -16,9 +13,9 @@ interface CardsProps {
 }
 
 const Cards: FunctionComponent<CardsProps> = ({ searchInput }) => {
-    let { cards, isLoading } = useCards()
+    let { cards, isLoading, setFlag, flag } = useCards()
     let userTools = useContext(UserTools);
-    let { user } = useUser()
+    let { user, payload } = useUser();
     const navigate: NavigateFunction = useNavigate()
 
 
@@ -29,6 +26,18 @@ const Cards: FunctionComponent<CardsProps> = ({ searchInput }) => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentCards = cards.slice(indexOfFirstItem, indexOfLastItem);
+
+
+    let handleDeleteCard = (cardId: string) => {
+        if (prompt("This card would be DELETED permanently!!. please type yes, if you want to Delete this card!") == "yes") {
+            deleteCard(cardId).then(() => {
+                successMsg("The Card as been DELETED successfuly");
+                setFlag(!flag)
+            }).catch((err) => console.log(err))
+        } else {
+            alert("you did not typed 'YES' therfor the Card stays ")
+        }
+    }
 
 
     return (<section className="text-center">
@@ -51,6 +60,7 @@ const Cards: FunctionComponent<CardsProps> = ({ searchInput }) => {
                     <div className="cardTools">
                         <a className="phone" href={`tel:${card.phone}`}><i className="fa-solid fa-phone"></i></a>
                         {userTools.user.loggedIn && <LikeButton cardId={card._id as string} userId={user?._id as string} />}
+                        {payload.isAdmin && <i className="fa-regular fa-trash-can text-danger" onClick={() => handleDeleteCard(card._id as string)}></i>}
                     </div>
 
                     <img

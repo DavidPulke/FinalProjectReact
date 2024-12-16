@@ -10,6 +10,13 @@
 }
 
 
+@media(max-width: 1400px) {
+    section .cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+
 /* larger phones */
 @media(max-width: 1024px) {
 
@@ -33,12 +40,13 @@
 @media(max-width: 991px) {
 
     /* navbar */
-    .form-search {
+    nav .form-search {
         position: absolute;
         left: 50%;
         top: 10px;
         transform: translate(-50%, 0);
     }
+
 
     html .card-data-solo {
         grid-template-columns: repeat(1, 1fr);
@@ -83,7 +91,7 @@
 @media(max-width: 576px) {
 
     /* navbar */
-    .form-search {
+    nav .form-search {
         width: 70%;
         right: 10px;
         top: 87%;

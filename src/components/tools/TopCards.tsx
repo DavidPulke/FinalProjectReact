@@ -1,11 +1,13 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import Card from "../../interfaces/Card";
 import { likesAnalyst } from "./handlers/likesAnalyst";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 
 interface TopCardsProps { }
 
 const TopCards: FunctionComponent<TopCardsProps> = () => {
     let [topCards, setTopCards] = useState<Card[]>([]);
+    const navigate: NavigateFunction = useNavigate()
 
     useEffect(() => {
         likesAnalyst()
@@ -31,6 +33,7 @@ const TopCards: FunctionComponent<TopCardsProps> = () => {
                                 onError={(e) => {
                                     e.currentTarget.src = "Images/DefaultCardImage.gif";
                                 }}
+                                onClick={() => navigate(`/card-data/${topCards[0]._id}`)}
                             />
                             <h5>{topCards[0].likes?.length} Likes</h5>
                         </div>
@@ -49,6 +52,7 @@ const TopCards: FunctionComponent<TopCardsProps> = () => {
                                 onError={(e) => {
                                     e.currentTarget.src = "Images/DefaultCardImage.gif";
                                 }}
+                                onClick={() => navigate(`/card-data/${topCards[1]._id}`)}
                             />
                             <h5>{topCards[1].likes?.length} Likes</h5>
                         </div>
@@ -67,6 +71,7 @@ const TopCards: FunctionComponent<TopCardsProps> = () => {
                                 onError={(e) => {
                                     e.currentTarget.src = "Images/DefaultCardImage.gif";
                                 }}
+                                onClick={() => navigate(`/card-data/${topCards[2]._id}`)}
                             />
                             <h5>{topCards[2].likes?.length} Likes</h5>
                         </div>

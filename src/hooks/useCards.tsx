@@ -10,7 +10,7 @@ export const useCards = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const cards = useSelector((state: any) => state.cardsState.cards);
     const dispatch = useDispatch<Dispatch<CardsAction>>();
-
+    let [flag, setFlag] = useState<boolean>(false)
     useEffect(() => {
         getAllCards()
             .then((res) => {
@@ -20,7 +20,7 @@ export const useCards = () => {
             .catch((err) => {
                 console.error(`Error: ${err}`);
             });
-    }, [dispatch]);
+    }, [dispatch, flag]);
 
-    return { cards, isLoading };
+    return { cards, isLoading, setFlag, flag };
 };

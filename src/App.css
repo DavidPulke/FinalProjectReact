@@ -9,7 +9,8 @@ nav {
   opacity: 0.95;
 }
 
-nav i {
+nav i,
+.search-wraper i {
   font-size: 22px;
   margin-top: 3px;
 }
@@ -33,6 +34,7 @@ nav i {
 
 .userIcon img {
   width: 100%;
+  border-radius: 100%;
 }
 
 
@@ -69,15 +71,25 @@ strong {
   cursor: default;
 }
 
-.search-wraper input:focus,
-.search-wraper input:hover {
-  box-shadow: 0 0 10px red;
+.search-wraper input {
+  transition: all 0.3s;
 }
 
-.search-wraper input:focus+i,
-.search-wraper input:hover+i {
-  display: none;
+.search-wraper input:focus,
+.search-wraper input:hover,
+.search-wraper input:not(:placeholder-shown) {
+  box-shadow: 0 0 10px red;
+  margin-right: 2rem;
 }
+
+.search-wraper input:not(:placeholder-shown)+i {
+  opacity: 0;
+  visibility: hidden;
+  scale: 0.9;
+  transition: all 0.3s;
+}
+
+
 
 
 
@@ -389,4 +401,29 @@ footer ul .fa-id-card {
 
 #cardContact a.mail {
   background-color: red;
+}
+
+
+
+
+/* AboutUsText */
+
+
+
+
+
+
+/* crm */
+.searchType {
+  width: 200px;
+  margin-top: 1em;
+  padding: 7px;
+  border-radius: 0 0 10px 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.searchType:hover,
+.searchType:focus {
+  width: 230px;
 }

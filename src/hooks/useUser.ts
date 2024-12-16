@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react"
-import { getUserDetails } from "../services/usersService"
+import { CustomJwtPayload, getUserDetails } from "../services/usersService"
 import { User } from "../interfaces/User"
+import { jwtDecode } from "jwt-decode"
 
 
 
@@ -11,7 +12,7 @@ export let themes = {
     },
     dark: {
         color: "#000",
-        background: "#fff"
+        background: "#F0F8FF"
     }
 }
 
@@ -30,6 +31,11 @@ export const UserTools = createContext(tools)
 
 export const useUser = () => {
     let [user, setUser] = useState<User>()
+    let payload = { isAdmin: false };
+    if (localStorage.token != undefined) {
+        payload = jwtDecode<CustomJwtPayload>(localStorage.token);
+    }
+
 
     useEffect(() => {
         if (tools.user.token) {
@@ -40,5 +46,5 @@ export const useUser = () => {
         }
     }, [])
 
-    return { user }
+    return { user, payload }
 }

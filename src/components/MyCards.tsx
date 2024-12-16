@@ -30,6 +30,8 @@ const MyCards: FunctionComponent<MyCardsProps> = () => {
                 successMsg("Your Card as been DELETED successfuly");
                 refresh()
             }).catch((err) => console.log(err))
+        } else {
+            alert("you did not typed 'YES' Therefor the card Stays ")
         }
     }
 

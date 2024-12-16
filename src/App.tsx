@@ -18,6 +18,7 @@ import { CardProvider } from './context/CardContext';
 import FavCards from './components/FavCards';
 import MyCards from './components/MyCards';
 import CardData from './components/CardData';
+import Crm from './components/Crm';
 
 
 
@@ -59,7 +60,7 @@ function App() {
         <UserTools.Provider value={tools}>
           <CardProvider>
             <Router>
-              <Navbar setInputRef={setSearchInput} inputRef={searchInput} setTheme={handleTheme} lightMode={lightMode} setFlag={setFlag} flag={flag} />
+              <Navbar setInputRef={setSearchInput} inputRef={searchInput} setTheme={handleTheme} lightMode={lightMode} />
               <Routes>
                 <Route path='/' element={<Cards searchInput={searchInput as string} />}></Route>
                 <Route path='/login' element={<Login />}></Route>
@@ -68,6 +69,8 @@ function App() {
                 <Route path='/my-cards' element={<MyCards />}></Route>
                 <Route path='/card-data/:cardId' element={<CardData />}></Route>
                 <Route path='/fav-cards' element={<FavCards searchInput={searchInput as string} />}></Route>
+
+                <Route path='/crm' element={<Crm />}></Route>
                 <Route path='*' element={<PageNotFound />}></Route>
               </Routes>
               <Footer />

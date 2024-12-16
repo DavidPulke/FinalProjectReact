@@ -1,5 +1,5 @@
 import axios from "axios"
-import { errorMsg } from "./feedbackService"
+import { errorMsg, successMsg } from "./feedbackService"
 import Card from "../interfaces/Card"
 import { getUserDetails } from "./usersService"
 import { User } from "../interfaces/User"
@@ -117,3 +117,17 @@ export function createCard(card: Card) {
 export function deleteCard(cardId: string) {
     return axios.delete(`${api}/${cardId}`, { headers: { 'x-auth-token': localStorage.token } })
 }
+
+
+// deleteCard
+/* export const handleDeleteCard = (cardId: string, func: (flag: boolean) => void, flag: boolean) => {
+
+    if (prompt("This card would be DELETED permanently!!. please type yes, if you want to Delete this card!") == "yes") {
+        deleteCard(cardId).then(() => {
+            successMsg("Your Card as been DELETED successfuly");
+            return func(!flag)
+        }).catch((err) => console.log(err))
+    } else {
+        alert("you did not typed 'YES' Therefor the card Stays ")
+    }
+} */

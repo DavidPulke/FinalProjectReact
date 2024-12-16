@@ -10,25 +10,28 @@ import { UserTools, useUser } from "../hooks/useUser";
 interface NavbarProps {
     setTheme: (flag: boolean) => void
     lightMode?: boolean;
-    setFlag: (flag: boolean) => void;
-    flag?: boolean;
     inputRef: any;
     setInputRef: (str: string) => void;
 }
 
-const Navbar: FunctionComponent<NavbarProps> = ({ setTheme, lightMode, setFlag, flag, inputRef, setInputRef }) => {
+const Navbar: FunctionComponent<NavbarProps> = ({ setTheme, lightMode, inputRef, setInputRef }) => {
+
+
     let userTools = useContext(UserTools)
     const dispatch = useDispatch<any>();
-    let { user } = useUser()
+    let { user, payload } = useUser()
     let [signOut, setSignOut] = useState<boolean>(false);
     const navigate: NavigateFunction = useNavigate()
+
+
 
     let handleSignOut = () => {
         localStorage.removeItem("token");
         userTools.user.loggedIn = false;
-        setSignOut(true)
         navigate('/')
+        window.history.go(0)
     }
+
 
 
 
@@ -67,6 +70,14 @@ const Navbar: FunctionComponent<NavbarProps> = ({ setTheme, lightMode, setFlag, 
                         {user?.isBusiness && <li>
                             <NavLink to={'/my-cards'} className="nav-link" aria-current="page">My Cards</NavLink>
                         </li>}
+
+                        {payload.isAdmin && <li>
+                            <NavLink to={'/crm'} className="nav-link" aria-current="page">CRM</NavLink>
+                        </li>}
+
+
+
+
 
                     </ul>
                     <form className="d-flex form-search gap-2" role="search">
