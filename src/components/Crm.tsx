@@ -1,4 +1,4 @@
-import { FunctionComponent, SetStateAction, useEffect, useRef, useState } from "react";
+import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { User } from "../interfaces/User";
 import { deleteUser, getAllUsers, searchUsers } from "../services/usersService";
 import CustomPagination from "./tools/CustomPagination";
@@ -11,7 +11,7 @@ interface CrmProps {
 
 const Crm: FunctionComponent<CrmProps> = () => {
     let [users, setUsers] = useState<User[]>([]);
-    let { user, payload } = useUser()
+    let { payload } = useUser()
     let [flag, setFlag] = useState<boolean>(false)
     let searchType = useRef<HTMLSelectElement>()
 

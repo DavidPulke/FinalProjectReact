@@ -1,6 +1,6 @@
 import axios from "axios"
 import { jwtDecode, JwtPayload } from "jwt-decode"
-import { Login, User } from "../interfaces/User"
+import { EditUserType, Login, User } from "../interfaces/User"
 import { errorMsg } from "./feedbackService";
 
 
@@ -93,5 +93,13 @@ export async function searchUsers(querry: string, searchType: string) {
     } catch (error) {
         errorMsg(`Error: ${error}`)
     }
+};
+
+
+
+export function editUser(userId: string, newUser: EditUserType) {
+    console.log(userId);
+
+    return axios.put(`${api}/${userId}`, newUser, { headers: { 'x-auth-token': localStorage.token } })
 }
 

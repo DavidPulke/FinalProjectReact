@@ -112,6 +112,7 @@ const Navbar: FunctionComponent<NavbarProps> = ({ setTheme, lightMode, inputRef,
 
                 {user != undefined &&
                     userTools.user.loggedIn ? <div className="loggedIn"> <div className="userIcon">
+                        <i onClick={() => navigate(`/edit-user/${user?._id}`)} title="Edit User" className="fa-solid fa-pencil logo"></i>
                         {user.image.url !== "" ? <img src={user.image.url} alt="User Image" title={`${user.name.first} ${user?.name.last} Icon`} onError={(e) => {
                             e.currentTarget.src = "Images/DefaultUserImage.png";
                             e.currentTarget.title = "default icon"

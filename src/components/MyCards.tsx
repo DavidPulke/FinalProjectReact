@@ -1,7 +1,5 @@
-import { Dispatch, FunctionComponent, useContext, useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { CardsAction, getAllMyCardsAction, setAllCardsAction } from "../redux/PostsState";
-import { deleteCard, getAllMyCards } from "../services/cardsService";
+import { FunctionComponent, useContext, useState } from "react";
+import { deleteCard } from "../services/cardsService";
 import { useMyCards } from "../hooks/useMyCards";
 import { UserTools, useUser } from "../hooks/useUser";
 import Card from "../interfaces/Card";
@@ -38,7 +36,7 @@ const MyCards: FunctionComponent<MyCardsProps> = () => {
     let refresh = () => {
         setFlag(!flag)
     };
-    let { cards, isLoading } = useMyCards(refresh)
+    let { cards } = useMyCards(refresh)
     let userTools = useContext(UserTools);
     let { user } = useUser()
 

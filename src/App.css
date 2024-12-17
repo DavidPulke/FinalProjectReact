@@ -23,6 +23,7 @@ nav i,
   border-radius: 100%;
   padding: 7.2px;
   box-shadow: 0 0 7px #fcb, 0 0 7px #fcb inset;
+  position: relative;
 }
 
 .loggedIn {
@@ -34,7 +35,17 @@ nav i,
 
 .userIcon img {
   width: 100%;
+  height: 100%;
   border-radius: 100%;
+}
+
+
+.userIcon i {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform: translate(30%, 30%);
+  cursor: pointer;
 }
 
 
@@ -110,7 +121,8 @@ section {
   margin-bottom: 7rem;
 }
 
-.cards .card {
+.cards .card,
+.userCard .card {
   height: 450px;
   filter: drop-shadow(0 0 7px #000);
   border-radius: 20px;
@@ -120,24 +132,18 @@ section {
   transition: all 0.5s ease-in;
 }
 
-/* 
-.card:hover {
-  cursor: pointer;
-  filter: drop-shadow(0 0 3px #fff);
-  transform: scale(0.97);
-  transition: none;
-} */
 
 
 
 
-.cards .card img {
+
+.card img {
   height: 100%;
   filter: brightness(0.7);
   border-radius: 20px;
 }
 
-.cards .card .card-data {
+.card .card-data {
   width: 100%;
   height: 55%;
   text-align: left;
@@ -184,6 +190,17 @@ section {
 .sidebar {
   padding: 10px;
   background-color: #07ff8b;
+}
+
+.userCard {
+  width: 80%;
+  max-width: 400px;
+  margin: 2rem auto;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 20px;
+  position: relative;
+  margin-bottom: 2rem;
 }
 
 
@@ -238,6 +255,7 @@ section {
   position: relative;
   bottom: 0;
 }
+
 
 
 

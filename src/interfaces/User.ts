@@ -23,3 +23,12 @@ export interface Login {
     email: string,
     password: string
 }
+
+
+export interface EditUserType {
+    _id?: string,
+    name: Name,
+    phone: string,
+    image: Image,
+    address: Address
+}

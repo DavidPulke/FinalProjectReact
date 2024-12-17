@@ -19,6 +19,7 @@ import FavCards from './components/FavCards';
 import MyCards from './components/MyCards';
 import CardData from './components/CardData';
 import Crm from './components/Crm';
+import EditUser from './components/EditUser';
 
 
 
@@ -67,6 +68,7 @@ function App() {
                 <Route path='/about' element={<About />}></Route>
                 <Route path='/register' element={<Register />}></Route>
                 <Route path='/my-cards' element={<MyCards />}></Route>
+                <Route path='/edit-user/:userId' element={<EditUser />}></Route>
                 <Route path='/card-data/:cardId' element={<CardData />}></Route>
                 <Route path='/fav-cards' element={<FavCards searchInput={searchInput as string} />}></Route>
 
