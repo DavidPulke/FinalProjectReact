@@ -21,8 +21,6 @@
 }
 
 
-
-
 @keyframes scrolling {
     from {
         opacity: 0.3;
@@ -32,5 +30,19 @@
     to {
         opacity: 1;
         scale: 1;
+    }
+}
+
+
+
+@keyframes rotation {
+    0% {
+        --gradient-angle: 0deg;
+        background-position: 0% 0%;
+    }
+
+    100% {
+        --gradient-angle: 360deg;
+        background-position: 100% 100%;
     }
 }

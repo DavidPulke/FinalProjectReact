@@ -37,6 +37,7 @@
     }
 }
 
+
 @media(max-width: 991px) {
 
     /* navbar */
@@ -75,16 +76,44 @@
         padding-left: 12px;
     }
 
+
+    /* about */
+    .podiumImg,
+    .podium {
+        width: 90%;
+    }
 }
 
-@media(max-width: 776px) {
 
+
+@media(max-width: 776px) {
 
     /* cards */
     section .cards {
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
+
+/* medium phones */
+@media(max-width: 691px) {
+    .techs {
+        width: 100%;
+        transform: rotateX(0) rotateY(0) !important;
+    }
+
+    .about-wraper {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        margin: 0 auto;
+    }
+
+    .analyst {
+        width: 100%;
+    }
+
+}
+
 
 
 /* Phones */

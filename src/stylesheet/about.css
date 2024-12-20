@@ -4,35 +4,7 @@
 }
 
 
-:root {
-    --color-1: #052b2f;
-    --color-2: #073438;
-    --color-3: #0e4b50;
-    --color-4: #2d8f85;
-    --color-5: #637c54;
-    --bar-bg: #e0e0e0;
-    --fill-color: linear-gradient(to right, #637c54, purple, rgb(224, 74, 74), #073438, #2d8f85, #637c54);
-}
 
-@property --gradient-angle {
-    syntax: "<angle>";
-    initial-value: 0deg;
-    inherits: false;
-}
-
-
-
-@keyframes rotation {
-    0% {
-        --gradient-angle: 0deg;
-        background-position: 0% 0%;
-    }
-
-    100% {
-        --gradient-angle: 360deg;
-        background-position: 100% 100%;
-    }
-}
 
 .techs {
     height: fit-content;
@@ -232,34 +204,4 @@
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-
-/* Large Phones */
-@media(max-width: 991px) {
-
-    .podiumImg,
-    .podium {
-        width: 90%;
-    }
-}
-
-
-/* medium phones */
-@media(max-width: 691px) {
-
-    .techs {
-        width: 100%;
-        transform: rotateX(0) rotateY(0) !important;
-    }
-
-    .about-wraper {
-        display: grid;
-        grid-template-columns: repeat(1, 1fr);
-        margin: 0 auto;
-    }
-
-    .analyst {
-        width: 100%;
-    }
 }
