@@ -29,7 +29,7 @@ const CardData: FunctionComponent<CardDataProps> = () => {
                         <h2 className="logo">{card.title}</h2>
                         <h3>{card.subtitle}</h3>
                         <img src={card.image.url} alt={card.image.alt} onError={(e) => {
-                            e.currentTarget.src = "https://cdn.pixabay.com/photo/2023/07/04/19/43/man-8106958_1280.png";
+                            e.currentTarget.src = "/Images/CardDefaultPerson.png";
                         }} />
                     </div>
 

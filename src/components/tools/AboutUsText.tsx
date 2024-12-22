@@ -6,7 +6,7 @@ const AboutUsText: React.FC = () => {
     const { user } = useUser()
     return (
         <section className='AboutUsText' style={styles.container}>
-            <div>
+            <article>
                 <h1 style={styles.heading}>Welcome to BCard</h1>
                 <p style={styles.paragraph}>
                     BCard is the perfect solution for businesses looking to present themselves in a professional and digital
@@ -24,7 +24,7 @@ const AboutUsText: React.FC = () => {
                     Join Now
                 </Link>}
 
-            </div>
+            </article>
         </section>
     );
 };

@@ -19,8 +19,7 @@ const Navbar: FunctionComponent<NavbarProps> = ({ setTheme, lightMode, inputRef,
 
     let userTools = useContext(UserTools)
     const dispatch = useDispatch<any>();
-    let { user, payload } = useUser()
-    let [signOut, setSignOut] = useState<boolean>(false);
+    let { user, payload, setAsChanged } = useUser()
     const navigate: NavigateFunction = useNavigate()
 
 
@@ -28,6 +27,7 @@ const Navbar: FunctionComponent<NavbarProps> = ({ setTheme, lightMode, inputRef,
     let handleSignOut = () => {
         localStorage.removeItem("token");
         userTools.user.loggedIn = false;
+        setAsChanged(true)
         navigate('/')
         window.history.go(0)
     }
@@ -38,7 +38,7 @@ const Navbar: FunctionComponent<NavbarProps> = ({ setTheme, lightMode, inputRef,
     const handleSearch = async (searchQuery: string) => {
         inputRef = searchQuery
         try {
-            const filteredCards = await searchCards(searchQuery);
+            const filteredCards = await searchCards(searchQuery.toLowerCase());
 
             dispatch(filterCardsAction(filteredCards));
         } catch (error) {
@@ -67,7 +67,7 @@ const Navbar: FunctionComponent<NavbarProps> = ({ setTheme, lightMode, inputRef,
                             <NavLink to={'/fav-cards'} className="nav-link" aria-current="page">Fav Cards</NavLink>
                         </li>}
 
-                        {user?.isBusiness && <li>
+                        {user?.isBusiness && user != undefined && <li>
                             <NavLink to={'/my-cards'} className="nav-link" aria-current="page">My Cards</NavLink>
                         </li>}
 
@@ -109,12 +109,11 @@ const Navbar: FunctionComponent<NavbarProps> = ({ setTheme, lightMode, inputRef,
             <div className="collapse navbar-collapse loginNav text-light" id="navbarSupportedContent">
 
 
-
                 {user != undefined &&
                     userTools.user.loggedIn ? <div className="loggedIn"> <div className="userIcon">
                         <i onClick={() => navigate(`/edit-user/${user?._id}`)} title="Edit User" className="fa-solid fa-pencil logo"></i>
                         {user.image.url !== "" ? <img src={user.image.url} alt="User Image" title={`${user.name.first} ${user?.name.last} Icon`} onError={(e) => {
-                            e.currentTarget.src = "Images/DefaultUserImage.png";
+                            e.currentTarget.src = "/Images/DefaultUserImage.png";
                             e.currentTarget.title = "default icon"
                         }} /> : <img src="Images/DefaultUserImage.png" alt="Default Image" title="default icon" />}
                     </div>

@@ -1,10 +1,10 @@
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { NavigateFunction, useNavigate, useParams } from "react-router-dom";
 import { useUser } from "../hooks/useUser";
 import { FormikValues, useFormik } from "formik";
 import { EditUserType, User } from "../interfaces/User";
 import { successMsg, errorMsg } from "../services/feedbackService";
-import { editUser } from "../services/usersService";
+import { editUser, setBusiness } from "../services/usersService";
 import * as yup from 'yup'
 
 interface EditUserProps {
@@ -23,14 +23,19 @@ const EditUser: FunctionComponent<EditUserProps> = () => {
         isBusiness: false,
     })
     let { user, payload } = useUser()
+    let businessCheack = useRef<any>()
 
     const navigate: NavigateFunction = useNavigate()
     useEffect(() => {
         if (user != undefined) {
             setUserEdit(user as User)
         }
-
     }, [user])
+
+    useEffect(() => {
+        formik.setValues(userEdit);
+    }, [userEdit]);
+
 
 
     const formik: FormikValues = useFormik<EditUserType>({
@@ -59,7 +64,6 @@ const EditUser: FunctionComponent<EditUserProps> = () => {
         }),
 
         onSubmit: (values) => {
-            console.log(values);
 
             editUser(userId as string, {
                 name: { first: values.name.first, middle: values.name.middle, last: values.name.last },
@@ -69,6 +73,7 @@ const EditUser: FunctionComponent<EditUserProps> = () => {
                 },
                 image: { url: values.image.url, alt: values.image.alt },
             }).then(() => {
+                setBusiness(userId as string, businessCheack.current.value)
                 successMsg("Welcome To BCard good to have you here");
                 navigate(-1)
             }).catch((err) => errorMsg(`Error: ${err}`))
@@ -76,15 +81,15 @@ const EditUser: FunctionComponent<EditUserProps> = () => {
     })
 
 
-    useEffect(() => {
-
-    }, [])
+    if (!userEdit || !userEdit.image.url) {
+        return <div>Loading...</div>;
+    }
     return (<section className="register-box">
         <div className="userCard">
             <div className="card" key={userEdit._id}>
 
                 <img src={userEdit.image.url} alt={userEdit.image.alt} title={`${userEdit.name.first} ${userEdit.name.last}`} onError={(e) => {
-                    e.currentTarget.src = 'Images/DefaultUserImage.png'
+                    e.currentTarget.src = '/Images/DefaultUserImage.png'
                 }} />
 
 
@@ -311,6 +316,16 @@ const EditUser: FunctionComponent<EditUserProps> = () => {
                             </p>}
                         </div>
                     </div>
+                </div>
+                <div className="form-check w-75 m-auto mb-3 text-warning">
+                    <input className="form-check-input" type="checkbox" value={formik.values.isBusiness} onChange={formik.handleChange}
+                        onBlur={formik.handleBlur} name="isBusiness" id="flexCheckDefault"
+                        checked={formik.values.isBusiness ? true : false}
+                        ref={businessCheack}
+                    />
+                    <label className="form-check-label" htmlFor="flexCheckDefault" >
+                        Signup as business
+                    </label>
                 </div>
 
                 <div className="formControl">

@@ -35,6 +35,7 @@ export const useUser = () => {
     if (localStorage.token != undefined) {
         payload = jwtDecode<CustomJwtPayload>(localStorage.token);
     }
+    let [asChanged, setAsChanged] = useState<boolean>(false)
 
 
     useEffect(() => {
@@ -44,7 +45,7 @@ export const useUser = () => {
             }).catch((err) => console.log(err)
             )
         }
-    }, [])
+    }, [asChanged])
 
-    return { user, payload }
+    return { user, payload, setAsChanged, asChanged }
 }

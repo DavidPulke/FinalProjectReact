@@ -13,10 +13,12 @@ const Crm: FunctionComponent<CrmProps> = () => {
     let [users, setUsers] = useState<User[]>([]);
     let { payload } = useUser()
     let [flag, setFlag] = useState<boolean>(false)
+    let [isLoading, setisLoading] = useState<boolean>(true)
     let searchType = useRef<HTMLSelectElement>()
 
     useEffect(() => {
         getAllUsers().then((res) => {
+            setisLoading(true)
             setUsers(res.data);
         }).catch((err) => console.log(err)
         )
@@ -90,6 +92,9 @@ const Crm: FunctionComponent<CrmProps> = () => {
 
 
         <h3>Users</h3>
+        {isLoading && <div className="spinner-border" role="status">
+            <span className="sr-only">Loading...</span>
+        </div>}
 
         <div className="cards">
             {currentUsers.length > 0 && currentUsers.map((user) => {

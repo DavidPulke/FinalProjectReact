@@ -1,0 +1,22 @@
+/* dark */
+@media (prefers-color-scheme: dark) {
+    .App {
+        background: #191919;
+        color: #fff;
+    }
+}
+
+/* light */
+@media (prefers-color-scheme: light) {
+    .App {
+        background: #F0F8FF;
+        color: #000;
+    }
+}
+
+/* animation */
+@media (prefers-reduced-motion) {
+    body {
+        animation: none !important;
+    }
+}

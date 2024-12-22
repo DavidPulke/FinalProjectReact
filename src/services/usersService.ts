@@ -98,8 +98,10 @@ export async function searchUsers(querry: string, searchType: string) {
 
 
 export function editUser(userId: string, newUser: EditUserType) {
-    console.log(userId);
-
     return axios.put(`${api}/${userId}`, newUser, { headers: { 'x-auth-token': localStorage.token } })
+}
+
+export function setBusiness(userId: string, isBusiness: boolean) {
+    return axios.patch(`${api}/${userId}`, { isBusiness: isBusiness }, { headers: { 'x-auth-token': localStorage.token } })
 }
 
