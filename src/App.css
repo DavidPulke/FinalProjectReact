@@ -50,7 +50,8 @@ nav i,
 
 
 
-.logo {
+.logo,
+.mini-logo {
   background: linear-gradient(to right, #637c54, purple, rgb(224, 74, 74), #073438, #2d8f85, #637c54);
   background-size: 500%;
   -webkit-text-fill-color: transparent;
@@ -58,6 +59,10 @@ nav i,
   animation: rainbow 10s infinite linear;
   background-position: left;
   font-size: 1.7rem;
+}
+
+footer .mini-logo {
+  font-size: 1.1rem;
 }
 
 section .logo {

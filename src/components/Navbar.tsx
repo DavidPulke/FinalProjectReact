@@ -39,6 +39,9 @@ const Navbar: FunctionComponent<NavbarProps> = ({ setTheme, lightMode, inputRef,
         inputRef = searchQuery
         try {
             const filteredCards = await searchCards(searchQuery.toLowerCase());
+            if (searchQuery.length == 1) {
+                navigate('/')
+            }
 
             dispatch(filterCardsAction(filteredCards));
         } catch (error) {
@@ -85,7 +88,7 @@ const Navbar: FunctionComponent<NavbarProps> = ({ setTheme, lightMode, inputRef,
                             <input
                                 className="form-control"
                                 type="search"
-                                placeholder="Search"
+                                placeholder="Search Cards"
                                 aria-label="Search"
 
                                 onChange={(e) => {

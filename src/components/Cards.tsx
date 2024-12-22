@@ -68,7 +68,7 @@ const Cards: FunctionComponent<CardsProps> = ({ searchInput }) => {
                         alt={card.image.alt}
                         title={card.title}
                         onError={(e) => {
-                            e.currentTarget.src = "Images/DefaultCardImage.gif";
+                            e.currentTarget.src = "/Images/CardDefaultPerson.png";
                         }}
                     />
                     <div className="card-data">
@@ -95,7 +95,7 @@ const Cards: FunctionComponent<CardsProps> = ({ searchInput }) => {
                         alt={card.image.alt}
                         title={card.title}
                         onError={(e) => {
-                            e.currentTarget.src = "Images/DefaultCardImage.gif";
+                            e.currentTarget.src = "/Images/CardDefaultPerson.png";
                         }}
                     />
                     <div className="card-data">

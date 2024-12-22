@@ -70,7 +70,7 @@ function App() {
                 <Route path='/my-cards' element={<MyCards />}></Route>
                 <Route path='/edit-user/:userId' element={<EditUser />}></Route>
                 <Route path='/card-data/:cardId' element={<CardData />}></Route>
-                <Route path='/fav-cards' element={<FavCards searchInput={searchInput as string} />}></Route>
+                <Route path='/fav-cards' element={<FavCards />}></Route>
 
                 <Route path='/crm' element={<Crm />}></Route>
                 <Route path='*' element={<PageNotFound />}></Route>

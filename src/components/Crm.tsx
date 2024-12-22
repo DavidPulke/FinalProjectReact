@@ -4,6 +4,7 @@ import { deleteUser, getAllUsers, searchUsers } from "../services/usersService";
 import CustomPagination from "./tools/CustomPagination";
 import { useUser } from "../hooks/useUser";
 import { successMsg } from "../services/feedbackService";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 
 interface CrmProps {
 
@@ -15,6 +16,7 @@ const Crm: FunctionComponent<CrmProps> = () => {
     let [flag, setFlag] = useState<boolean>(false)
     let [isLoading, setisLoading] = useState<boolean>(true)
     let searchType = useRef<HTMLSelectElement>()
+    const navigate: NavigateFunction = useNavigate()
 
     useEffect(() => {
         getAllUsers().then((res) => {
@@ -98,9 +100,13 @@ const Crm: FunctionComponent<CrmProps> = () => {
 
         <div className="cards">
             {currentUsers.length > 0 && currentUsers.map((user) => {
+                isLoading && setisLoading(false)
                 return <div className="card" key={user._id}>
                     <div className="cardTools">
-                        {payload.isAdmin && <i className="fa-regular fa-trash-can text-danger" onClick={() => handleDeleteUser(user._id as string)}></i>}
+                        {payload.isAdmin && <i className="fa-regular fa-trash-can text-danger" onClick={() => handleDeleteUser(user._id as string)}></i>
+                        }
+                        {payload.isAdmin && <i onClick={() => navigate(`/edit-user/${user._id}`)} title="Edit User" className="fa-solid fa-pencil text-warning"></i>
+                        }
                     </div>
                     <img src={user.image.url} alt={user.image.alt} title={`${user.name.first} ${user.name.last}`} onError={(e) => {
                         e.currentTarget.src = 'Images/DefaultUserImage.png'

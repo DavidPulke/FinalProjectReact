@@ -5,7 +5,7 @@ import Card from "../interfaces/Card";
 import * as yup from "yup"
 import cardInitValues from "./tools/largeObj/formik";
 import { createCard } from "../services/cardsService";
-import { successMsg } from "../services/feedbackService";
+import { errorMsg, successMsg } from "../services/feedbackService";
 
 interface AddCardProps {
     onHide: Function;
@@ -42,11 +42,11 @@ const AddCard: FunctionComponent<AddCardProps> = ({ refresh, onHide }) => {
             }),
         }),
         onSubmit: (values: Card) => {
-            createCard(values).then((res) => {
-                successMsg("Your business card as been added successfuly now everyone can see it");
+            createCard(values).then(() => {
+                successMsg("Your business card as been added successfuly now everyone can see it :)");
                 onHide()
             }
-            ).catch((err) => console.log(err)
+            ).catch(() => errorMsg('oops something went wrong try again')
             )
         }
 

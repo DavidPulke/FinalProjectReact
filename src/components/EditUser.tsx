@@ -4,7 +4,7 @@ import { useUser } from "../hooks/useUser";
 import { FormikValues, useFormik } from "formik";
 import { EditUserType, User } from "../interfaces/User";
 import { successMsg, errorMsg } from "../services/feedbackService";
-import { editUser, setBusiness } from "../services/usersService";
+import { editUser, getUserById, setBusiness } from "../services/usersService";
 import * as yup from 'yup'
 
 interface EditUserProps {
@@ -22,10 +22,16 @@ const EditUser: FunctionComponent<EditUserProps> = () => {
         image: { url: "", alt: "" },
         isBusiness: false,
     })
-    let { user, payload } = useUser()
+    let [user, setUser] = useState<User>()
     let businessCheack = useRef<any>()
 
     const navigate: NavigateFunction = useNavigate()
+
+    useEffect(() => {
+        getUserById(userId as string).then((res) => setUser(res.data)).catch((err) => console.log(err)
+        )
+    }, [])
+
     useEffect(() => {
         if (user != undefined) {
             setUserEdit(user as User)
@@ -74,15 +80,17 @@ const EditUser: FunctionComponent<EditUserProps> = () => {
                 image: { url: values.image.url, alt: values.image.alt },
             }).then(() => {
                 setBusiness(userId as string, businessCheack.current.value)
-                successMsg("Welcome To BCard good to have you here");
+                successMsg("The user as been updated");
                 navigate(-1)
-            }).catch((err) => errorMsg(`Error: ${err}`))
+            }).catch(() => errorMsg(`oops something went wrong`))
         }
     })
 
 
     if (!userEdit || !userEdit.image.url) {
-        return <div>Loading...</div>;
+        return <div className="spinner-border" role="status">
+            <span className="sr-only">Loading...</span>
+        </div>;
     }
     return (<section className="register-box">
         <div className="userCard">

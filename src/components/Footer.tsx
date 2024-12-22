@@ -7,7 +7,7 @@ interface FooterProps {
 }
 
 const Footer: FunctionComponent<FooterProps> = () => {
-    let { user, asChanged } = useUser()
+    let { user, asChanged, payload } = useUser()
     let userTools = useContext(UserTools)
     let [loggedOut, setLoggedOut] = useState<boolean>(false)
     useEffect(() => {
@@ -27,6 +27,10 @@ const Footer: FunctionComponent<FooterProps> = () => {
                 {user?.isBusiness && !loggedOut && <li>
                     <i className="fa-regular fa-id-card"></i>
                     <Link to={'/my-cards'} className="nav-link text-light" aria-current="page">My Cards</Link>
+                </li>}
+                {payload.isAdmin && <li>
+                    <i className="fa-solid fa-gamepad mini-logo"></i>
+                    <Link to={'/crm'} className="nav-link text-light" aria-current="page">CRM</Link>
                 </li>}
             </ul>
         </footer>
