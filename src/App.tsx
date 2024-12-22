@@ -1,5 +1,4 @@
-import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -11,7 +10,6 @@ import PageNotFound from './components/PageNotFound';
 import { ToastContainer } from 'react-toastify';
 import { Provider } from 'react-redux';
 import store from './redux/store';
-import { getUserDetails } from './services/usersService';
 import { tools, themes, UserTools } from './hooks/useUser';
 import About from './components/About';
 import { CardProvider } from './context/CardContext';
@@ -35,8 +33,6 @@ function App() {
 
   let [searchInput, setSearchInput] = useState<string>("");
 
-  let [flag, setFlag] = useState<boolean>()
-
   let handleTheme = (flag: boolean) => {
     if (flag) {
       setlightMode(false)
@@ -47,9 +43,7 @@ function App() {
     }
   }
 
-  useEffect(() => {
 
-  }, [flag])
 
 
   return (
