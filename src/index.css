@@ -33,6 +33,10 @@ html {
   box-sizing: border-box;
 }
 
+body {
+  scroll-behavior: smooth;
+}
+
 
 .App {
   width: 100%;
