@@ -12,7 +12,7 @@ interface AddCardProps {
     refresh: Function;
 }
 
-const AddCard: FunctionComponent<AddCardProps> = ({ refresh, onHide }) => {
+const AddCard: FunctionComponent<AddCardProps> = ({ onHide }) => {
 
 
 

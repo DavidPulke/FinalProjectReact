@@ -30,13 +30,11 @@ const MyCards: FunctionComponent<MyCardsProps> = () => {
 
     let handleDeleteCard = (cardId: string) => {
 
-        if (prompt("This card would be DELETED permanently!!. please type yes, if you want to Delete this card!") == "yes") {
+        if (window.confirm("This card would be DELETED permanently!!. do you want to Delete this card?")) {
             deleteCard(cardId).then(() => {
                 successMsg("Your Card as been DELETED successfuly");
                 refresh()
             }).catch((err) => console.log(err))
-        } else {
-            alert("you did not typed 'YES' Therefor the card Stays ")
         }
     }
 

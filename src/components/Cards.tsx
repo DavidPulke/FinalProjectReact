@@ -1,4 +1,4 @@
-import { FunctionComponent, useContext, useEffect, useState } from "react";
+import { FunctionComponent, useContext, useState } from "react";
 import { deleteCard } from "../services/cardsService";
 import Card from "../interfaces/Card";
 import { successMsg } from "../services/feedbackService";
@@ -29,13 +29,11 @@ const Cards: FunctionComponent<CardsProps> = ({ searchInput }) => {
 
 
     let handleDeleteCard = (cardId: string) => {
-        if (prompt("This card would be DELETED permanently!!. please type yes, if you want to Delete this card!") == "yes") {
+        if (window.confirm("This card would be DELETED permanently!!. please type yes, if you want to Delete this card!")) {
             deleteCard(cardId).then(() => {
                 successMsg("The Card as been DELETED successfuly");
                 setFlag(!flag)
             }).catch((err) => console.log(err))
-        } else {
-            alert("you did not typed 'YES' therfor the Card stays ")
         }
     }
 
