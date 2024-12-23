@@ -7,6 +7,7 @@ import LikeButton from "./tools/LikeButton";
 import AddCardModal from "./Modals/AddCardModal";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { successMsg } from "../services/feedbackService";
+import EditCardModal from "./Modals/EditCardModal";
 
 interface MyCardsProps {
 
@@ -14,11 +15,17 @@ interface MyCardsProps {
 
 const MyCards: FunctionComponent<MyCardsProps> = () => {
     const [openAddModal, setOpenAddModal] = useState<boolean>(false);
+    const [openEditModal, setOpenEditModal] = useState<boolean>(false);
     let [flag, setFlag] = useState<boolean>(false);
+    let [cardId, setCardId] = useState<string>('');
     const navigate: NavigateFunction = useNavigate()
 
     let handleAddProduct = () => {
         setOpenAddModal(true);
+    };
+
+    let handleEditProduct = () => {
+        setOpenEditModal(true);
     };
 
     let handleDeleteCard = (cardId: string) => {
@@ -51,7 +58,10 @@ const MyCards: FunctionComponent<MyCardsProps> = () => {
                         <a className="phone" href={`tel:${card.phone}`}><i className="fa-solid fa-phone"></i></a>
 
                         {userTools.user.loggedIn && <LikeButton cardId={card._id as string} userId={user?._id as string} />}
-                        {user?.isBusiness && <i className="fa-regular fa-pen-to-square text-warning"></i>}
+                        {user?.isBusiness && <i onClick={() => {
+                            handleEditProduct()
+                            setCardId(card._id as string)
+                        }} className="fa-regular fa-pen-to-square text-warning"></i>}
                         {user?.isBusiness && <i className="fa-regular fa-trash-can text-danger" onClick={() => handleDeleteCard(card._id as string)}></i>}
                     </div>
 
@@ -85,6 +95,8 @@ const MyCards: FunctionComponent<MyCardsProps> = () => {
         </button>}
 
         <AddCardModal onHide={() => setOpenAddModal(false)} refresh={refresh} show={openAddModal} />
+
+        <EditCardModal onHide={() => setOpenEditModal(false)} refresh={refresh} show={openEditModal} cardId={cardId} />
     </section>);
 }
 

@@ -119,15 +119,9 @@ export function deleteCard(cardId: string) {
 }
 
 
-// deleteCard
-/* export const handleDeleteCard = (cardId: string, func: (flag: boolean) => void, flag: boolean) => {
+// editCard
+export function editCard(cardId: string, cardValues: Card) {
+    console.log(cardValues);
 
-    if (prompt("This card would be DELETED permanently!!. please type yes, if you want to Delete this card!") == "yes") {
-        deleteCard(cardId).then(() => {
-            successMsg("Your Card as been DELETED successfuly");
-            return func(!flag)
-        }).catch((err) => console.log(err))
-    } else {
-        alert("you did not typed 'YES' Therefor the card Stays ")
-    }
-} */
+    return axios.put(`${api}/${cardId}`, cardValues, { headers: { 'x-auth-token': localStorage.token } })
+}

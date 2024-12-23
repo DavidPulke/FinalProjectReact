@@ -16,21 +16,21 @@ const Footer: FunctionComponent<FooterProps> = () => {
     return (<div className="gap">
         <footer className="bg-dark">
             <ul className="footerList">
-                <li>
+                <li> <Link to={"/about"}>
                     <i className="fa-solid fa-circle-exclamation text-warning"></i>
-                    <Link to={"/about"}>About</Link>
+                    About</Link>
                 </li>
-                {userTools.user.loggedIn && !loggedOut && <li>
+                {userTools.user.loggedIn && !loggedOut && <li><Link to={"/fav-cards"}>
                     <i className="fa-solid fa-heart text-danger"></i>
-                    <Link to={"/fav-cards"}>Fav Cards</Link>
+                    Fav Cards</Link>
                 </li>}
-                {user?.isBusiness && !loggedOut && <li>
+                {user?.isBusiness && !loggedOut && <li><Link to={'/my-cards'} className="text-light" >
                     <i className="fa-regular fa-id-card"></i>
-                    <Link to={'/my-cards'} className="nav-link text-light" aria-current="page">My Cards</Link>
+                    My Cards</Link>
                 </li>}
-                {payload.isAdmin && <li>
+                {payload.isAdmin && <li><Link to={'/crm'} className=" text-light">
                     <i className="fa-solid fa-gamepad mini-logo"></i>
-                    <Link to={'/crm'} className="nav-link text-light" aria-current="page">CRM</Link>
+                    CRM</Link>
                 </li>}
             </ul>
         </footer>
