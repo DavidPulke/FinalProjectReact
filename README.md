@@ -2,6 +2,12 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## WEB LINKS
+- about = taking to the about page where you can see the analyst of the top business and more
+- fav-cards = taking to the favorite cards page where you can see all your liked business cards
+- my-cards = taking to the my cards page where you can see and post your own business card ! this is only for a business users !
+- crm = taking to the control panel where you can edit and delete users ! this is only for an admin user !
+
 ## Available Scripts
 
 In the project directory, you can run:
