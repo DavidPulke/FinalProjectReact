@@ -35,14 +35,12 @@ const Crm: FunctionComponent<CrmProps> = () => {
 
 
     const handleDeleteUser = (userId: string) => {
-        if (prompt("Are you sure, you want to DELETE this user? if you are positive about it please type 'yes' in the input below") == 'yes') {
+        if (window.confirm("By accepting This User will be DELETED are you sure?")) {
             deleteUser(userId).then(() => {
                 successMsg("user as been DELETED successfuly!");
                 setFlag(!flag)
             }).catch((err) => console.log(err)
             )
-        } else {
-            alert("you did not typed 'YES' Therefor the user Stays ")
         }
     }
 

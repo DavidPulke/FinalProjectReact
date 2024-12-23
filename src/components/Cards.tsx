@@ -29,7 +29,7 @@ const Cards: FunctionComponent<CardsProps> = ({ searchInput }) => {
 
 
     let handleDeleteCard = (cardId: string) => {
-        if (window.confirm("This card would be DELETED permanently!!. please type yes, if you want to Delete this card!")) {
+        if (window.confirm("This card would be DELETED permanently!!. do you want to Delete this card?")) {
             deleteCard(cardId).then(() => {
                 successMsg("The Card as been DELETED successfuly");
                 setFlag(!flag)
