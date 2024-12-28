@@ -81,6 +81,8 @@ strong {
   position: relative;
 }
 
+
+
 .search-wraper i {
   position: absolute;
   top: 40%;
@@ -98,15 +100,71 @@ strong {
 .search-wraper input:focus,
 .search-wraper input:hover,
 .search-wraper input:not(:placeholder-shown) {
+
   box-shadow: 0 0 10px red;
   margin-right: 2rem;
 }
 
 .search-wraper input:not(:placeholder-shown)+i {
-  opacity: 0;
-  visibility: hidden;
-  scale: 0.9;
   transition: all 0.3s;
+  cursor: pointer;
+  filter: drop-shadow(0 0 2px red);
+}
+
+.lds-facebook,
+.lds-facebook div {
+  box-sizing: border-box;
+}
+
+.lds-facebook {
+  display: inline-block;
+  position: absolute;
+  top: 0px;
+  right: 0;
+  width: 50px;
+  height: 80px;
+  z-index: 2;
+}
+
+.lds-facebook div {
+  display: inline-block;
+  position: absolute;
+  left: 8px;
+  width: 7px;
+  box-shadow: 0 0 2px rgb(233, 68, 68);
+  background: currentColor;
+  animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+
+.lds-facebook div:nth-child(1) {
+  left: 8px;
+  animation-delay: -0.24s;
+  background: linear-gradient(to right, var(--color-5), var(--color-4));
+}
+
+.lds-facebook div:nth-child(2) {
+  left: 22px;
+  animation-delay: -0.12s;
+  background: linear-gradient(to right, var(--color-4), var(--color-3));
+}
+
+.lds-facebook div:nth-child(3) {
+  left: 36px;
+  animation-delay: 0s;
+  background: linear-gradient(to right, var(--color-3), var(--color-2));
+}
+
+@keyframes lds-facebook {
+  0% {
+    top: 0px;
+    height: 32px;
+  }
+
+  50%,
+  100% {
+    top: 18px;
+    height: 12px;
+  }
 }
 
 

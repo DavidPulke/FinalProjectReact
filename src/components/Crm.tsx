@@ -14,7 +14,9 @@ const Crm: FunctionComponent<CrmProps> = () => {
     let [users, setUsers] = useState<User[]>([]);
     let { payload } = useUser()
     let [flag, setFlag] = useState<boolean>(false)
-    let [isLoading, setisLoading] = useState<boolean>(true)
+    let [isLoading, setisLoading] = useState<boolean>(true);
+    let [searchLoading, setSearchLoading] = useState<boolean>(false);
+    let [querry, setQuerry] = useState<string>('')
     let searchType = useRef<HTMLSelectElement>()
     const navigate: NavigateFunction = useNavigate()
 
@@ -44,10 +46,14 @@ const Crm: FunctionComponent<CrmProps> = () => {
         }
     }
 
-    const handleSearch = async (querry: string) => {
+    const handleSearch = async (event: any, querry: string) => {
+        event.preventDefault()
+        setSearchLoading(true)
+
         try {
             let filteredUsers = await searchUsers(querry.toLowerCase(), searchType.current?.value as string)
             if (filteredUsers != undefined) {
+                setSearchLoading(false)
                 setUsers(filteredUsers[0] as any)
             }
 
@@ -59,7 +65,7 @@ const Crm: FunctionComponent<CrmProps> = () => {
 
     return (<section className=" text-center">
         <h1 ><span className="logo">CRM</span> |  <span className="logo">Control Panel</span></h1>
-        <form className="d-flex form-search gap-2" role="search">
+        <form onSubmit={(e) => handleSearch(e, querry)} className="d-flex form-search gap-2" role="search">
             <div className="search-wraper m-auto mt-2">
                 <input
                     className="form-control "
@@ -69,11 +75,15 @@ const Crm: FunctionComponent<CrmProps> = () => {
                     datatype={searchType.current?.value}
 
                     onChange={(e) => {
-                        handleSearch(e.target.value);
+                        setQuerry(e.target.value);
                     }}
                 />
 
-                <i className="fa-solid fa-magnifying-glass"></i>
+                {searchLoading ? <div className="lds-facebook">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div> : <i onClick={(e) => handleSearch(e, querry)} className="fa-solid fa-magnifying-glass"></i>}
             </div>
         </form>
         <select className="searchType" ref={searchType as any}>
@@ -94,6 +104,7 @@ const Crm: FunctionComponent<CrmProps> = () => {
         <h3>Users</h3>
         {isLoading && <div className="spinner-border" role="status">
             <span className="sr-only">Loading...</span>
+
         </div>}
 
         <div className="cards">
@@ -121,6 +132,10 @@ const Crm: FunctionComponent<CrmProps> = () => {
                 </div>
             })}
         </div>
+
+        {!isLoading && !searchLoading && <h3 className="text-danger">
+            {searchType.current?.value} not found!
+        </h3>}
 
         < CustomPagination
             totalItems={users.length}

@@ -1,5 +1,5 @@
-import { FunctionComponent, useContext, useEffect, useState } from "react";
-import { NavigateFunction, NavLink, useNavigate } from "react-router-dom";
+import { FunctionComponent, useContext, useEffect, useRef, useState } from "react";
+import { NavigateFunction, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { searchCards } from "../services/cardsService";
 import { useDispatch } from "react-redux";
 
@@ -15,13 +15,12 @@ interface NavbarProps {
 }
 
 const Navbar: FunctionComponent<NavbarProps> = ({ setTheme, lightMode, inputRef, setInputRef }) => {
-
+    let userLocation = useLocation()
 
     let userTools = useContext(UserTools)
     const dispatch = useDispatch<any>();
     let { user, payload, setAsChanged } = useUser()
     const navigate: NavigateFunction = useNavigate()
-
 
 
     let handleSignOut = () => {
@@ -32,17 +31,17 @@ const Navbar: FunctionComponent<NavbarProps> = ({ setTheme, lightMode, inputRef,
         window.history.go(0)
     }
 
+    if (inputRef.length == 1 && userLocation.pathname !== '/') {
+        navigate('/')
+        console.log('as navigated');
+    }
 
-
-
-    const handleSearch = async (searchQuery: string) => {
-        inputRef = searchQuery
+    const handleSearch = async (event: any, searchQuery: string) => {
+        event.preventDefault()
         try {
-            const filteredCards = await searchCards(searchQuery.toLowerCase());
-            if (searchQuery.length == 1) {
-                navigate('/')
-            }
+            inputRef = searchQuery
 
+            const filteredCards = await searchCards(searchQuery.toLowerCase());
             dispatch(filterCardsAction(filteredCards));
         } catch (error) {
             console.error("Search error:", error);
@@ -83,21 +82,19 @@ const Navbar: FunctionComponent<NavbarProps> = ({ setTheme, lightMode, inputRef,
 
 
                     </ul>
-                    <form className="d-flex form-search gap-2" role="search">
+                    <form onSubmit={(e) => handleSearch(e, inputRef)} className="d-flex form-search gap-2" role="search">
                         <div className="search-wraper">
                             <input
                                 className="form-control"
                                 type="search"
                                 placeholder="Search Cards"
                                 aria-label="Search"
-
                                 onChange={(e) => {
-                                    handleSearch(e.target.value);
                                     setInputRef(e.target.value)
                                 }}
                             />
 
-                            <i className="fa-solid fa-magnifying-glass"></i>
+                            <i onClick={(e) => handleSearch(e, inputRef)} className="fa-solid fa-magnifying-glass"></i>
                         </div>
 
 
