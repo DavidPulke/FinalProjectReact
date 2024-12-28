@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Dispatch } from "redux";
-import { CardsAction, getAllMyCardsAction, setAllCardsAction } from "../redux/PostsState";
-import { getAllCards, getAllMyCards } from "../services/cardsService";
+import { getAllMyCards } from "../services/cardsService";
 import Card from "../interfaces/Card";
 
 

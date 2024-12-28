@@ -10,9 +10,7 @@ import { usePassword } from "../hooks/usePassword";
 interface LoginProps {
 
 }
-// Admin 
-// email: admin@gmail.com
-// password: Abc!123Abc
+
 const Login: FunctionComponent<LoginProps> = () => {
 
     const navigate: NavigateFunction = useNavigate()

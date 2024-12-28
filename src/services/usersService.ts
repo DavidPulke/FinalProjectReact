@@ -12,7 +12,6 @@ export function getUserById(id: string) {
 
 
 export function login(values: Login) {
-    // password: David@12345 email: davidpolak@gmail.com
     return axios.post(`${api}/login`, values) // token
 }
 
@@ -56,11 +55,12 @@ export function getAllUsers() {
     return axios.get(api, { headers: { 'x-auth-token': localStorage.token } })
 }
 
-// delete user
 
+// delete user
 export function deleteUser(userId: string) {
     return axios.delete(`${api}/${userId}`, { headers: { 'x-auth-token': localStorage.token } })
 }
+
 
 // search cards 
 export async function searchUsers(querry: string, searchType: string) {

@@ -1,9 +1,7 @@
 import axios from "axios"
-import { errorMsg, successMsg } from "./feedbackService"
+import { errorMsg } from "./feedbackService"
 import Card from "../interfaces/Card"
-import { getUserDetails } from "./usersService"
-import { User } from "../interfaces/User"
-import { useUser } from "../hooks/useUser"
+
 
 
 const api: string = `${process.env.REACT_APP_API}/cards`
@@ -12,7 +10,6 @@ const api: string = `${process.env.REACT_APP_API}/cards`
 
 // get all cards
 export function getAllCards() {
-
     return axios.get(api)
 }
 
