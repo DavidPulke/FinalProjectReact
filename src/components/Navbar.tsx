@@ -21,6 +21,7 @@ const Navbar: FunctionComponent<NavbarProps> = ({ setTheme, lightMode, inputRef,
     const dispatch = useDispatch<any>();
     let { user, payload, setAsChanged } = useUser()
     const navigate: NavigateFunction = useNavigate()
+    let [searchLoading, setSearchLoading] = useState<boolean>(false);
 
 
     let handleSignOut = () => {
@@ -38,11 +39,13 @@ const Navbar: FunctionComponent<NavbarProps> = ({ setTheme, lightMode, inputRef,
 
     const handleSearch = async (event: any, searchQuery: string) => {
         event.preventDefault()
+        setSearchLoading(true)
         try {
             inputRef = searchQuery
 
             const filteredCards = await searchCards(searchQuery.toLowerCase());
             dispatch(filterCardsAction(filteredCards));
+            setSearchLoading(false)
         } catch (error) {
             console.error("Search error:", error);
         }
@@ -94,7 +97,11 @@ const Navbar: FunctionComponent<NavbarProps> = ({ setTheme, lightMode, inputRef,
                                 }}
                             />
 
-                            <i onClick={(e) => handleSearch(e, inputRef)} className="fa-solid fa-magnifying-glass"></i>
+                            {searchLoading ? <div className="lds-facebook">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div> : <i onClick={(e) => handleSearch(e, inputRef)} className="fa-solid fa-magnifying-glass"></i>}
                         </div>
 
 
