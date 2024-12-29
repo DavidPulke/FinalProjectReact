@@ -133,7 +133,7 @@ const Crm: FunctionComponent<CrmProps> = () => {
             })}
         </div>
 
-        {!isLoading && !searchLoading && <h3 className="text-danger">
+        {!isLoading && !searchLoading && currentUsers.length == 0 && <h3 className="text-danger">
             {searchType.current?.value} not found!
         </h3>}
 
